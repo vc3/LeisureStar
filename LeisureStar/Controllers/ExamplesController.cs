@@ -35,5 +35,10 @@ namespace LeisureStar.Controllers
 		{
 			return View();
 		}
+
+		public ActionResult Templates()
+		{
+			return View();
+		}
 	}
 }

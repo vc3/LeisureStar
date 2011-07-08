@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Example 2";
+    ViewBag.Title = "Example 3";
 }
 
 <script type="text/javascript">
@@ -16,11 +16,7 @@
 					"HasWonAGame": { "type": "Boolean", "index": 4 }
 				}
 			}
-		}
-	});
-
-	//setup your ExoWeb model
-	$exoweb({
+		},
 		model: {
 			player: {
 				id: "1",
@@ -33,21 +29,26 @@
 					}
 				}
 			}
-		}
-	});
-
-	Player.meta.addProperty({
-		name: 'FullName',
-		type: String
-	}).calculated({
-		fn: function () {
-			return this.get_FirstName() + " " + this.get_LastName();
 		},
-		basedOn: ['this.FirstName', 'this.LastName']
-	});
+		init: function () {
+			ExoWeb.UI.Template.load('@Url.Content("~/Examples/Templates")');
+		},
+		contextReady: function () {
+			Player.meta.addProperty({
+				name: 'FullName',
+				type: String
+			}).calculated({
+				fn: function () {
+					return this.get_FirstName() + " " + this.get_LastName();
+				},
+				basedOn: ['this.FirstName', 'this.LastName']
+			});
+		}
+	});	
 </script>
 
 <h2>Example 3</h2>
+<h3>Using MsAjax Method</h3>
 <div class="sys-template" sys:attach="dataview" dataview:data="{{ context.model.player }}">
 	<span>{binding FirstName }</span>
 	<span>{binding LastName }</span>
@@ -57,4 +58,16 @@
 	Last: <input type="text" id="textLastName" name="textLastName" sys:value="{binding LastName}" />
 	<br />
 	FullName: <input type="text" id="textFullName" name="textFullName" sys:value="{binding FullName}" />
+	<br />
+	HasWonAGame: <input type="text" id="textHasWon" name="textHasWon" sys:value="{binding HasWonAGame}" />
+</div>
+
+<h3>Using ExoWeb Templates</h3>
+<div class="sys-template" sys:attach="dataview" dataview:data="{~ context.model.player }">
+	<div class="readonly"><span sys:attach="content" content:data="{@@ FirstName }"></span></div>
+	<div class="readonly"><span sys:attach="content" content:data="{@@ LastName }"></span></div>
+	<div class="field"><span sys:attach="content" content:data="{@@ FirstName }"></span></div>
+	<div class="field"><span sys:attach="content" content:data="{@@ LastName }"></span></div>
+	<div class="field"><span sys:attach="content" content:data="{@@ FullName }"></span></div>
+	<div class="field"><span sys:attach="content" content:data="{@@ HasWonAGame }"></span></div>
 </div>

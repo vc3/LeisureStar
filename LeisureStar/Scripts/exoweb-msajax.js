@@ -786,6 +786,7 @@ Type.registerNamespace("ExoWeb.DotNet");
 
 		// Cache
 		ExoWeb.cache = function (key, value) {
+			var localKey = key;
 			// defer init of the cache so that the appInstanceId can be set
 			if (!cacheInited) {
 				cacheInited = true;
@@ -795,23 +796,23 @@ Type.registerNamespace("ExoWeb.DotNet");
 					window.localStorage.clear();
 
 				// Flush the local storage cache if the cache hash has changed
-				if (ExoWeb.cache("cacheHash") != cacheHash) {
+				if (window.localStorage.getItem("cacheHash") != cacheHash) {
 					ExoWeb.clearCache();
-					ExoWeb.cache("cacheHash", cacheHash);
+					window.localStorage.setItem("cacheHash", cacheHash);
 				}
 			}
 
 			// scope the cache to ExoWeb and to a particular app if there are multiple apps hosted at the same domain.
-			key = "ExoWeb:cache:" + ExoWeb.config.appInstanceId + ":" + key;
+			localKey = "ExoWeb:cache:" + ExoWeb.config.appInstanceId + ":" + localKey;
 
 			if (arguments.length == 1) {
-				value = window.localStorage.getItem(key);
+				value = window.localStorage.getItem(localKey);
 				return value ? JSON.parse(value) : null;
 			}
 			else if (arguments.length == 2) {
 				var json = JSON.stringify(value);
 				try {
-					window.localStorage.setItem(key, json);
+					window.localStorage.setItem(localKey, json);
 				}
 				catch (e) {
 					ExoWeb.trace.logWarning("cache", e);
@@ -9070,7 +9071,7 @@ Type.registerNamespace("ExoWeb.DotNet");
 		}
 
 		///initialize the object if it was ghosted
-		if (obj && obj.wasGhosted) {
+		if (id === STATIC_ID || (obj && obj.wasGhosted)) {
 		//			ExoWeb.trace.log("objectInit", "{0}({1})   <.>", [typeName, id]);
 
 			var loadedProperties = [];
@@ -13295,26 +13296,39 @@ Type.registerNamespace("ExoWeb.DotNet");
 	// #region MsAjax
 	//////////////////////////////////////////////////
 
-	(function() {
-		var impl = Sys.Binding.prototype._targetChanged;
-		Sys.Binding.prototype._targetChanged = function(force) {
+	(function () {
+		var targetChangedImpl = Sys.Binding.prototype._targetChanged;
+		Sys.Binding.prototype._targetChanged = function (force) {
 			var target = this._target;
 
 			// invoke the method implementation
-			impl.apply(this, [force]);
+			targetChangedImpl.apply(this, [force]);
 
 			// Set _lastTarget=false on other radio buttons in the group, since they only 
 			// remember the last target that was recieved when an event fires and radio button
 			// target change events fire on click (which does not account for de-selection).  
 			// Otherwise, the source value is only set the first time the radio button is selected.
 			if (Sys.UI.DomElement.isDomElement(target) && $(target).is("input[type=radio]")) {
-				$("input[type=radio][name='" + target.name + "']").each(function() {
+				$("input[type=radio][name='" + target.name + "']").each(function () {
 					if (this != target && this.__msajaxbindings !== undefined) {
 						var bindings = this.__msajaxbindings;
 						for (var i = 0; i < bindings.length; i++)
-							bindings[i]._lastTarget = false;
+							bindings[i]._lastTarget = bindings[i]._lastSource = false;
 					}
 				});
+			}
+		};
+
+		var sourceChangedImpl = Sys.Binding.prototype._sourceChanged;
+		Sys.Binding.prototype._sourceChanged = function (force) {
+			var target = this._target;
+
+			// invoke the method implementation
+			sourceChangedImpl.apply(this, [force]);
+
+			// Remove checked attribute from other radio buttons in the group that are currently checked.
+			if (Sys.UI.DomElement.isDomElement(target) && $(target).is("input[type=radio]") && !this._lastSource) {
+				$(target).removeAttr("checked");
 			}
 		};
 	})();
