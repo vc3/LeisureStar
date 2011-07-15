@@ -11,21 +11,26 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VC3.AutomatedTesting", "..\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VC3", "..\VC3.Shared\Transitional\VC3\Source\VC3.csproj", "{E46486DB-7904-4C07-8B21-440E1BA8687D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{A950268C-EC94-4A31-878D-5C446594DE21}"
+	ProjectSection(SolutionItems) = preProject
+		LeisureStar\LeisureStar.sqllite = LeisureStar\LeisureStar.sqllite
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 6
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = http://vc3-cae-tfs-01.vc3.com:8080/tfs/defaultcollection
-		SccProjectUniqueName0 = ..\\VC3.Public\\Amnesia\\Amnesia.csproj
-		SccProjectName0 = ../Amnesia
-		SccLocalPath0 = ..\\VC3.Public\\Amnesia
-		SccProjectUniqueName1 = ..\\VC3.Shared\\Transitional\\VC3.AutomatedTesting\\VC3.AutomatedTesting.csproj
-		SccProjectName1 = ../../VC3.Shared/Transitional/VC3.AutomatedTesting
-		SccLocalPath1 = ..\\VC3.Shared\\Transitional\\VC3.AutomatedTesting
-		SccProjectUniqueName2 = ..\\VC3.Shared\\Transitional\\VC3\\Source\\VC3.csproj
-		SccProjectName2 = ../../VC3.Shared/Transitional/VC3/Source
-		SccLocalPath2 = ..\\VC3.Shared\\Transitional\\VC3\\Source
-		SccLocalPath3 = .
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = ..\\VC3.Public\\Amnesia\\Amnesia.csproj
+		SccProjectName1 = ../Amnesia
+		SccLocalPath1 = ..\\VC3.Public\\Amnesia
+		SccProjectUniqueName2 = ..\\VC3.Shared\\Transitional\\VC3.AutomatedTesting\\VC3.AutomatedTesting.csproj
+		SccProjectName2 = ../../VC3.Shared/Transitional/VC3.AutomatedTesting
+		SccLocalPath2 = ..\\VC3.Shared\\Transitional\\VC3.AutomatedTesting
+		SccProjectUniqueName3 = ..\\VC3.Shared\\Transitional\\VC3\\Source\\VC3.csproj
+		SccProjectName3 = ../../VC3.Shared/Transitional/VC3/Source
+		SccLocalPath3 = ..\\VC3.Shared\\Transitional\\VC3\\Source
 		SccProjectUniqueName4 = LeisureStar.Tests\\LeisureStar.Tests.csproj
 		SccProjectName4 = LeisureStar.Tests
 		SccLocalPath4 = LeisureStar.Tests

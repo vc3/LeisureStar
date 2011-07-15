@@ -4,6 +4,10 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using ExoGraph;
+using System.Reflection;
+using ExoGraph.EntityFramework;
+using LeisureStar.Models;
 
 namespace LeisureStar
 {
@@ -35,6 +39,16 @@ namespace LeisureStar
 
 			RegisterGlobalFilters(GlobalFilters.Filters);
 			RegisterRoutes(RouteTable.Routes);
+
+			new GraphContextProvider().CreateContext += (source, args) =>
+			{
+				Assembly coreAssembly = typeof(MvcApplication).Assembly;
+				args.Context = new GraphContext(new EntityFrameworkGraphTypeProvider(() => new DataContext()));
+
+				ExoRule.Rule.RegisterRules(coreAssembly);
+			};
+
+			ExoWeb.ExoWeb.Adapter = new ExoWeb.DataAnnotations.ServiceAdapter();
 		}
 	}
 }
