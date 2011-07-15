@@ -9,6 +9,8 @@
 	<script src="@Url.Content("~/Scripts/MicrosoftAjax.js")" type="text/javascript"></script>
 	<script src="@Url.Content("~/Scripts/MicrosoftAjaxTemplates.debug.js")" type="text/javascript"></script>
 	<script src="@Url.Content("~/Scripts/exoweb-msajax.js")" type="text/javascript"></script>
+
+	@RenderSection("startupScript", required: false)
 </head>
 <body xmlns:sys="javascript:Sys" 
 		xmlns:dataview="javascript:Sys.UI.DataView" 
