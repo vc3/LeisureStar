@@ -16,7 +16,7 @@ namespace LeisureStar.Models
 		{
 			get
 			{
-				return DataContext.Current.TeamScores.ToArray();
+				return LeisureStarDataContext.Current.TeamScores.ToArray();
 			}
 		}
 	}

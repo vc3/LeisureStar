@@ -40,10 +40,11 @@ namespace LeisureStar
 			RegisterGlobalFilters(GlobalFilters.Filters);
 			RegisterRoutes(RouteTable.Routes);
 
+			//System.Diagnostics.Debugger.Launch();
 			new GraphContextProvider().CreateContext += (source, args) =>
 			{
 				Assembly coreAssembly = typeof(MvcApplication).Assembly;
-				args.Context = new GraphContext(new EntityFrameworkGraphTypeProvider(() => new DataContext()));
+				args.Context = new GraphContext(new EntityFrameworkGraphTypeProvider(() => new LeisureStarDataContext()));
 
 				ExoRule.Rule.RegisterRules(coreAssembly);
 			};

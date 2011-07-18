@@ -11,7 +11,7 @@ using ExoRule.DataAnnotations;
 
 namespace LeisureStar.Models
 {
-	public class DataContext : DbContext
+	public class LeisureStarDataContext : DbContext
 	{
 		static IRuleProvider annotationRules = new AnnotationsRuleProvider(typeof(Team).Assembly.GetGraphTypes());
 
@@ -20,16 +20,16 @@ namespace LeisureStar.Models
 		public DbSet<TeamScore> TeamScores { get; set; }
 		public DbSet<Game> Games { get; set; }
 
-		public static DataContext Current
+		public static LeisureStarDataContext Current
 		{
 			get
 			{
-				return (DataContext)((EntityFrameworkGraphTypeProvider.EntityGraphType)GraphContext.Current.GetGraphType<Team>()).GetObjectContext();
+				return (LeisureStarDataContext)((EntityFrameworkGraphTypeProvider.EntityGraphType)GraphContext.Current.GetGraphType<Team>()).GetObjectContext();
 			}
 		}
 
-		public DataContext()
-			: base("DataContext")
+		public LeisureStarDataContext()
+			: base("LeisureStarDataContext")
 		{
 			Configuration.LazyLoadingEnabled = true;
 		}

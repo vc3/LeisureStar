@@ -20,7 +20,7 @@ namespace LeisureStar.Models
 		{
 			get
 			{
-				return DataContext.Current.Games.ToArray();
+				return LeisureStarDataContext.Current.Games.ToArray();
 			}
 		}
 	}

@@ -16,9 +16,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{A9
 		LeisureStar\LeisureStar.sqllite = LeisureStar\LeisureStar.sqllite
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExoGraph", "..\VC3.Public\ExoGraph\ExoGraph\ExoGraph.csproj", "{F1D92AF4-9E97-4D29-8A24-B3C3011F2A42}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExoGraph.EntityFramework", "..\VC3.Public\ExoGraph\ExoGraph.EntityFramework\ExoGraph.EntityFramework.csproj", "{48D45BC6-1815-4F09-BD2F-FC5011B7DBC2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExoRule", "..\VC3.Public\ExoRules\ExoRules\ExoRule.csproj", "{B67D2642-A41A-42B2-8454-78ABA257008F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExoRule.DataAnnotations", "..\VC3.Public\ExoRules\ExoRule.DataAnnotations\ExoRule.DataAnnotations.csproj", "{790AF32B-245D-4CEE-B231-E7331C392324}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExoWeb", "..\VC3.Public\ExoWeb\ExoWeb\ExoWeb.csproj", "{4B14422C-751C-42AE-832A-B474A4AD0D95}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExoWeb.DataAnnotations", "..\VC3.Public\ExoWeb\ExoWeb.DataAnnotations\ExoWeb.DataAnnotations.csproj", "{662948BC-59DA-4771-949F-C5327BF35518}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 6
+		SccNumberOfProjects = 12
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = http://vc3-cae-tfs-01.vc3.com:8080/tfs/defaultcollection
 		SccLocalPath0 = .
@@ -37,6 +49,24 @@ Global
 		SccProjectUniqueName5 = LeisureStar\\LeisureStar.csproj
 		SccProjectName5 = LeisureStar
 		SccLocalPath5 = LeisureStar
+		SccProjectUniqueName6 = ..\\VC3.Public\\ExoGraph\\ExoGraph\\ExoGraph.csproj
+		SccProjectName6 = ../ExoGraph/ExoGraph
+		SccLocalPath6 = ..\\VC3.Public\\ExoGraph\\ExoGraph
+		SccProjectUniqueName7 = ..\\VC3.Public\\ExoGraph\\ExoGraph.EntityFramework\\ExoGraph.EntityFramework.csproj
+		SccProjectName7 = ../ExoGraph/ExoGraph.EntityFramework
+		SccLocalPath7 = ..\\VC3.Public\\ExoGraph\\ExoGraph.EntityFramework
+		SccProjectUniqueName8 = ..\\VC3.Public\\ExoRules\\ExoRules\\ExoRule.csproj
+		SccProjectName8 = ../ExoRules/ExoRules
+		SccLocalPath8 = ..\\VC3.Public\\ExoRules\\ExoRules
+		SccProjectUniqueName9 = ..\\VC3.Public\\ExoRules\\ExoRule.DataAnnotations\\ExoRule.DataAnnotations.csproj
+		SccProjectName9 = ../ExoRules/ExoRule.DataAnnotations
+		SccLocalPath9 = ..\\VC3.Public\\ExoRules\\ExoRule.DataAnnotations
+		SccProjectUniqueName10 = ..\\VC3.Public\\ExoWeb\\ExoWeb\\ExoWeb.csproj
+		SccProjectName10 = ../ExoWeb/ExoWeb
+		SccLocalPath10 = ..\\VC3.Public\\ExoWeb\\ExoWeb
+		SccProjectUniqueName11 = ..\\VC3.Public\\ExoWeb\\ExoWeb.DataAnnotations\\ExoWeb.DataAnnotations.csproj
+		SccProjectName11 = ../ExoWeb/ExoWeb.DataAnnotations
+		SccLocalPath11 = ..\\VC3.Public\\ExoWeb\\ExoWeb.DataAnnotations
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +93,30 @@ Global
 		{E46486DB-7904-4C07-8B21-440E1BA8687D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E46486DB-7904-4C07-8B21-440E1BA8687D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E46486DB-7904-4C07-8B21-440E1BA8687D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1D92AF4-9E97-4D29-8A24-B3C3011F2A42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1D92AF4-9E97-4D29-8A24-B3C3011F2A42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1D92AF4-9E97-4D29-8A24-B3C3011F2A42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1D92AF4-9E97-4D29-8A24-B3C3011F2A42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48D45BC6-1815-4F09-BD2F-FC5011B7DBC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48D45BC6-1815-4F09-BD2F-FC5011B7DBC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48D45BC6-1815-4F09-BD2F-FC5011B7DBC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48D45BC6-1815-4F09-BD2F-FC5011B7DBC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B67D2642-A41A-42B2-8454-78ABA257008F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B67D2642-A41A-42B2-8454-78ABA257008F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B67D2642-A41A-42B2-8454-78ABA257008F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B67D2642-A41A-42B2-8454-78ABA257008F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{790AF32B-245D-4CEE-B231-E7331C392324}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{790AF32B-245D-4CEE-B231-E7331C392324}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{790AF32B-245D-4CEE-B231-E7331C392324}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{790AF32B-245D-4CEE-B231-E7331C392324}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B14422C-751C-42AE-832A-B474A4AD0D95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B14422C-751C-42AE-832A-B474A4AD0D95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B14422C-751C-42AE-832A-B474A4AD0D95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B14422C-751C-42AE-832A-B474A4AD0D95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{662948BC-59DA-4771-949F-C5327BF35518}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{662948BC-59DA-4771-949F-C5327BF35518}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{662948BC-59DA-4771-949F-C5327BF35518}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{662948BC-59DA-4771-949F-C5327BF35518}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

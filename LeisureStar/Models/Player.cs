@@ -21,7 +21,7 @@ namespace LeisureStar.Models
 		{
 			get
 			{
-				return DataContext.Current.Players.ToArray();
+				return LeisureStarDataContext.Current.Players.ToArray();
 			}
 		}
 	}

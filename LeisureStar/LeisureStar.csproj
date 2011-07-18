@@ -37,32 +37,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Afterthought, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Afterthought.1.1.0\lib\Afterthought.dll</HintPath>
-    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.4.1.10331.0\lib\EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="ExoGraph">
-      <HintPath>..\packages\ExoGraph.1.0.0\lib\net35\ExoGraph.dll</HintPath>
-    </Reference>
-    <Reference Include="ExoGraph.EntityFramework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ExoGraph.EntityFramework.1.0.0\lib\net40\ExoGraph.EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="ExoRule">
-      <HintPath>..\packages\ExoRule.1.0.0\lib\net35\ExoRule.dll</HintPath>
-    </Reference>
-    <Reference Include="ExoRule.DataAnnotations">
-      <HintPath>..\packages\ExoRule.DataAnnotations.1.0.0\lib\net40\ExoRule.DataAnnotations.dll</HintPath>
-    </Reference>
-    <Reference Include="ExoWeb">
-      <HintPath>..\packages\ExoWeb.1.0.0\lib\ExoWeb.dll</HintPath>
-    </Reference>
-    <Reference Include="ExoWeb.DataAnnotations">
-      <HintPath>..\packages\ExoWeb.DataAnnotations.1.0.0\lib\net40\ExoWeb.DataAnnotations.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>..\packages\System.Data.SQLite.1.0.66.1\lib\System.Data.SQLite.DLL</HintPath>
+    </Reference>
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -94,7 +76,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
-    <Compile Include="Models\DataContext.cs" />
+    <Compile Include="Models\LeisureStarDataContext.cs" />
     <Compile Include="Models\Game.cs" />
     <Compile Include="Models\Player.cs" />
     <Compile Include="Models\Team.cs" />
@@ -130,23 +112,15 @@
     <Content Include="Content\themes\base\jquery.ui.tabs.css" />
     <Content Include="Content\themes\base\jquery.ui.theme.css" />
     <Content Include="Global.asax" />
-    <Content Include="Scripts\exoweb-base.js" />
-    <Content Include="Scripts\exoweb-base.min.js" />
-    <Content Include="Scripts\exoweb-msajax-nojquery.js" />
-    <Content Include="Scripts\exoweb-msajax-nojquery.min.js" />
     <Content Include="Scripts\exoweb-msajax.js" />
-    <Content Include="Scripts\exoweb-msajax.min.js" />
     <Content Include="Scripts\jquery-1.5.1-vsdoc.js" />
     <Content Include="Scripts\jquery-1.5.1.js" />
     <Content Include="Scripts\jquery-1.5.1.min.js" />
     <Content Include="Scripts\jquery-ui-1.8.11.js" />
     <Content Include="Scripts\jquery-ui-1.8.11.min.js" />
-    <Content Include="Scripts\jquery.exoweb-msajax.js" />
-    <Content Include="Scripts\jquery.exoweb-msajax.min.js" />
     <Content Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\json2.js" />
     <Content Include="Scripts\MicrosoftAjaxTemplates.debug.js" />
     <Content Include="Scripts\modernizr-1.7.js" />
     <Content Include="Scripts\modernizr-1.7.min.js" />
@@ -208,6 +182,30 @@
       <Project>{1A246932-199E-4DEE-8C7B-D5FBC3FF52C9}</Project>
       <Name>Amnesia</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\VC3.Public\ExoGraph\ExoGraph.EntityFramework\ExoGraph.EntityFramework.csproj">
+      <Project>{48D45BC6-1815-4F09-BD2F-FC5011B7DBC2}</Project>
+      <Name>ExoGraph.EntityFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\VC3.Public\ExoGraph\ExoGraph\ExoGraph.csproj">
+      <Project>{F1D92AF4-9E97-4D29-8A24-B3C3011F2A42}</Project>
+      <Name>ExoGraph</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\VC3.Public\ExoRules\ExoRule.DataAnnotations\ExoRule.DataAnnotations.csproj">
+      <Project>{790AF32B-245D-4CEE-B231-E7331C392324}</Project>
+      <Name>ExoRule.DataAnnotations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\VC3.Public\ExoRules\ExoRules\ExoRule.csproj">
+      <Project>{B67D2642-A41A-42B2-8454-78ABA257008F}</Project>
+      <Name>ExoRule</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\VC3.Public\ExoWeb\ExoWeb.DataAnnotations\ExoWeb.DataAnnotations.csproj">
+      <Project>{662948BC-59DA-4771-949F-C5327BF35518}</Project>
+      <Name>ExoWeb.DataAnnotations</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\VC3.Public\ExoWeb\ExoWeb\ExoWeb.csproj">
+      <Project>{4B14422C-751C-42AE-832A-B474A4AD0D95}</Project>
+      <Name>ExoWeb</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Examples\Templates.cshtml" />
@@ -248,7 +246,6 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PostBuildEvent>"$(SolutionDir)packages\Afterthought.1.1.0\tools\Afterthought.Amender.exe" "$(TargetPath)"
-</PostBuildEvent>
+    <PostBuildEvent>"C:\Projects\Afterthought\Afterthought.Amender\bin\Debug\Afterthought.Amender.exe" "$(TargetPath)" "$(TargetDir)ExoGraph.EntityFramework.dll"</PostBuildEvent>
   </PropertyGroup>
 </Project>
