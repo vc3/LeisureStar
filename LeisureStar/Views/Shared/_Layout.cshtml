@@ -10,6 +10,15 @@
 	<script src="@Url.Content("~/Scripts/MicrosoftAjaxTemplates.debug.js")" type="text/javascript"></script>
 	<script src="@Url.Content("~/Scripts/exoweb-msajax.js")" type="text/javascript"></script>
 
+
+	<!--- Level 2 config -->
+	<script type="text/javascript">
+		$exoweb({
+			init: function () {
+				ExoWeb.UI.Template.load('@Url.Content("~/Examples/Templates")');
+			}
+		});
+	</script>
 	@RenderSection("startupScript", required: false)
 </head>
 <body xmlns:sys="javascript:Sys" 

@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "List";
+    ViewBag.Title = "Teams";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -9,9 +9,24 @@
 		teams = Team.All
 	}))
 }
-<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<h2>Teams</h2>
 
+<section>
+	<table class="grid readonly">
+	<thead>
+	<tr>
+				<th>Team</th>
+				<th>Wins</th>
+				<th>&nbsp;</th>
+	</tr>
+	</thead>
+	<tbody class="sys-template" sys:attach="dataview" dataview:data="{~ model.teams,source=window.context}">
+	<tr sys:class="{{ $index % 2 == 0 ? 'even' : '' }}">
+				<td sys:attach="content" content:data="{@@ Name}"></td>
+				<td sys:attach="content" content:data="{@@ Wins}"></td>
+				<td><a sys:href="{{ '@Url.Action("Edit", "Team")/' + $dataItem.meta.id }}">Edit</a></td>
+	</tr>
+	</table>
+</section>
+<a href="@Url.Action("Edit", "Department")" class="button">Add</a>

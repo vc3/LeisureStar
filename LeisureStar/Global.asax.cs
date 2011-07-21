@@ -24,7 +24,7 @@ namespace LeisureStar
 
 		public static void RegisterRoutes(RouteCollection routes)
 		{
-			routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+			routes.IgnoreRoute("{*allHandlers}", new { allHandlers = @".*\.axd(/.*)?" });
 
 			routes.MapRoute(
 				"Default", // Route name
@@ -36,10 +36,8 @@ namespace LeisureStar
 
 		protected void Application_Start()
 		{
-			System.Diagnostics.Debugger.Launch();
+			//System.Diagnostics.Debugger.Launch();
 			//Rebuild Database from the POCO's
-			Database.SetInitializer<LeisureStarDataContext>(new LeisureStarDataContextInitializer());
-
 			new GraphContextProvider().CreateContext += (source, args) =>
 			{
 				Assembly coreAssembly = typeof(MvcApplication).Assembly;
@@ -48,12 +46,12 @@ namespace LeisureStar
 				ExoRule.Rule.RegisterRules(coreAssembly);
 			};
 
+			//Database.SetInitializer<LeisureStarDataContext>(new LeisureStarDataContextInitializer());
+
 			AreaRegistration.RegisterAllAreas();
 
 			RegisterGlobalFilters(GlobalFilters.Filters);
 			RegisterRoutes(RouteTable.Routes);
-
-			
 
 			ExoWeb.ExoWeb.Adapter = new ExoWeb.DataAnnotations.ServiceAdapter();
 		}
