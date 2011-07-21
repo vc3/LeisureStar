@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section startupScript
+{
+	@Html.Raw(ExoWeb.Model(new {
+		teams = Team.All
+	}))
+}
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+

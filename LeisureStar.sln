@@ -11,11 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VC3.AutomatedTesting", "..\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VC3", "..\VC3.Shared\Transitional\VC3\Source\VC3.csproj", "{E46486DB-7904-4C07-8B21-440E1BA8687D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{A950268C-EC94-4A31-878D-5C446594DE21}"
-	ProjectSection(SolutionItems) = preProject
-		LeisureStar\LeisureStar.sqllite = LeisureStar\LeisureStar.sqllite
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExoGraph", "..\VC3.Public\ExoGraph\ExoGraph\ExoGraph.csproj", "{F1D92AF4-9E97-4D29-8A24-B3C3011F2A42}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExoGraph.EntityFramework", "..\VC3.Public\ExoGraph\ExoGraph.EntityFramework\ExoGraph.EntityFramework.csproj", "{48D45BC6-1815-4F09-BD2F-FC5011B7DBC2}"

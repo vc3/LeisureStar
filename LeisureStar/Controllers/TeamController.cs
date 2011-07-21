@@ -7,17 +7,14 @@ using LeisureStar.Models;
 
 namespace LeisureStar.Controllers
 {
-    public class PlayerController : Controller
+    public class TeamController : Controller
     {
         //
-        // GET: /Player/
+        // GET: /Team/
 
         public ActionResult Index()
         {
-			LeisureStarDataContext context = LeisureStarDataContext.Current;
-			var players = from p in context.Players
-						  select p;
-            return View(players);
+			return View();
         }
 
     }

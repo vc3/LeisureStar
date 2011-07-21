@@ -13,7 +13,7 @@ namespace LeisureStar.Models
 {
 	public class LeisureStarDataContext : DbContext
 	{
-		static IRuleProvider annotationRules = new AnnotationsRuleProvider(typeof(Team).Assembly.GetGraphTypes());
+		//static IRuleProvider annotationRules = new AnnotationsRuleProvider(typeof(Team).Assembly.GetGraphTypes());
 
 		public DbSet<Team> Teams { get; set; }
 		public DbSet<Player> Players { get; set; }
@@ -26,19 +26,6 @@ namespace LeisureStar.Models
 			{
 				return (LeisureStarDataContext)((EntityFrameworkGraphTypeProvider.EntityGraphType)GraphContext.Current.GetGraphType<Team>()).GetObjectContext();
 			}
-		}
-
-		public LeisureStarDataContext()
-			: base("LeisureStarDataContext")
-		{
-			Configuration.LazyLoadingEnabled = true;
-		}
-
-		protected override void OnModelCreating(DbModelBuilder modelBuilder)
-		{
-			modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-			modelBuilder.Entity<Team>().HasMany(t => t.Players).WithMany(p => p.Teams);
-			modelBuilder.Entity<Game>().HasMany(g => g.TeamScores).WithRequired();
 		}
 	}
 }

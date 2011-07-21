@@ -8,6 +8,7 @@ using ExoGraph;
 using System.Reflection;
 using ExoGraph.EntityFramework;
 using LeisureStar.Models;
+using System.Data.Entity;
 
 namespace LeisureStar
 {
@@ -35,12 +36,10 @@ namespace LeisureStar
 
 		protected void Application_Start()
 		{
-			AreaRegistration.RegisterAllAreas();
+			System.Diagnostics.Debugger.Launch();
+			//Rebuild Database from the POCO's
+			Database.SetInitializer<LeisureStarDataContext>(new LeisureStarDataContextInitializer());
 
-			RegisterGlobalFilters(GlobalFilters.Filters);
-			RegisterRoutes(RouteTable.Routes);
-
-			//System.Diagnostics.Debugger.Launch();
 			new GraphContextProvider().CreateContext += (source, args) =>
 			{
 				Assembly coreAssembly = typeof(MvcApplication).Assembly;
@@ -48,6 +47,13 @@ namespace LeisureStar
 
 				ExoRule.Rule.RegisterRules(coreAssembly);
 			};
+
+			AreaRegistration.RegisterAllAreas();
+
+			RegisterGlobalFilters(GlobalFilters.Filters);
+			RegisterRoutes(RouteTable.Routes);
+
+			
 
 			ExoWeb.ExoWeb.Adapter = new ExoWeb.DataAnnotations.ServiceAdapter();
 		}

@@ -10,9 +10,9 @@ namespace LeisureStar.Models
 {
 	public class Team
 	{
-		public int Id { get; set; }
+		public int TeamId { get; set; }
 		public string Name { get; set; }
-		public ICollection<Player> Players { get; set; }
+		public virtual ICollection<Player> Players { get; set; }
 		public int Wins { get; set; }
 
 		public static Team[] All

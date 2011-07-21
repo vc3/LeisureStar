@@ -7,17 +7,17 @@ namespace LeisureStar.Models
 {
 	public class TeamScore
 	{
-		public int Id { get; set; }
+		public int TeamScoreId { get; set; }
 		public Game Game { get; set; }
 		public Team Team { get; set; }
 		public int Score { get; set; }
 
-		public static TeamScore[] All
-		{
-			get
-			{
-				return LeisureStarDataContext.Current.TeamScores.ToArray();
-			}
-		}
+		//public static TeamScore[] All
+		//{
+		//    get
+		//    {
+		//        return LeisureStarDataContext.Current.TeamScores.ToArray();
+		//    }
+		//}
 	}
 }
