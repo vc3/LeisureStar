@@ -5,17 +5,35 @@ using System.ComponentModel.DataAnnotations;
 using ExoGraph;
 using ExoRule;
 using ExoRule.DataAnnotations;
+
 namespace LeisureStar.Models
 {
 	public class Player
 	{
 		public int PlayerId { get; set; }
+
 		public virtual ICollection<Team> Teams { get; set; }
+
+		[Required]
 		public string FirstName { get; set; }
+
+		[Required]
 		public string LastName { get; set; }
+
+		[Required]
 		public string Gender { get; set; }
-		public bool HasWon { get; set; }
-		public int Wins { get; set; }
+
+		[NotMapped]
+		public bool HasWon { get { return Wins > 0; } }
+
+		[NotMapped]
+		public int Wins 
+		{
+			get
+			{
+				return ((List<Team>)Teams).Sum(t => t.Wins);
+			}
+		}
 
 		public static Player[] All
 		{

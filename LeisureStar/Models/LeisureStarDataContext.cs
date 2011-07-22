@@ -17,7 +17,7 @@ namespace LeisureStar.Models
 
 		public DbSet<Team> Teams { get; set; }
 		public DbSet<Player> Players { get; set; }
-		public DbSet<TeamScore> TeamScores { get; set; }
+		public DbSet<Score> Scores { get; set; }
 		public DbSet<Game> Games { get; set; }
 
 		public static LeisureStarDataContext Current

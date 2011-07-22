@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Teams";
+    ViewBag.Title = "List Teams";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -23,10 +23,10 @@
 	</thead>
 	<tbody class="sys-template" sys:attach="dataview" dataview:data="{~ model.teams,source=window.context}">
 	<tr sys:class="{{ $index % 2 == 0 ? 'even' : '' }}">
-				<td sys:attach="content" content:data="{@@ Name}"></td>
-				<td sys:attach="content" content:data="{@@ Wins}"></td>
+				<td class="readonly" sys:attach="content" content:data="{@@ Name}"></td>
+				<td class="readonly" sys:attach="content" content:data="{@@ Wins}"></td>
 				<td><a sys:href="{{ '@Url.Action("Edit", "Team")/' + $dataItem.meta.id }}">Edit</a></td>
 	</tr>
 	</table>
 </section>
-<a href="@Url.Action("Edit", "Department")" class="button">Add</a>
+<a href="@Url.Action("Edit", "Team")" class="button">Add</a>

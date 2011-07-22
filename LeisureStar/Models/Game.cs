@@ -11,11 +11,31 @@ namespace LeisureStar.Models
 	public class Game
 	{
 		public int GameId { get; set; }
-		public virtual ICollection<TeamScore> TeamScores { get; set; }
+
+		public virtual ICollection<Score> Scores { get; set; }
+
+		[Required]
 		public string Name { get; set; }
-		public Team Winner { get; set; }
+
+		[Required]
 		public DateTime Started { get; set; }
+
 		public DateTime Finished { get; set; }
+
+		[NotMapped]
+		public Team Winner
+		{
+			get
+			{
+				var maxTeamScore = Scores.Where(ts => ts.Value == Scores.Max(scores => scores.Value));
+				if(maxTeamScore.Count() > 0)
+				{
+					return maxTeamScore.First().Team;
+				}
+				else
+					return null;
+			}
+		}
 
 		public static Game[] All
 		{

@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "Edit Team";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section startupScript 
+{
+	@Html.Raw(ExoWeb.Model(new { team = ViewData["Team"].Include() },
+	(Team team) =>
+	{
+	}))
+		<script type="text/javascript">
+			function showMessage(message) {
+				var messageBox = $('.message');
+				messageBox.children('span').text(message);
+				messageBox.fadeIn();
+			}
+
+			function save() {
+				if ($('.validated-some').length > 0) {
+					showMessage('There are unresolved validation errors. Please correct and try again.');
+				}
+				else {
+					context.server.save(
+					context.model.team,
+					function success() {
+						document.location.href = '@Url.Action("Index", "Team")';
+					},
+					function fail() {
+						showMessage('An error occurred while saving.');
+					});
+				}
+			}
+	</script>
+}
+
+<h2>Edit Team</h2>
+<section>
+	<div class="sys-template" sys:attach="dataview" dataview:data="{~ model.team, source=window.context}">
+		<div class="field"><span sys:attach="content" content:data="{@@ Name }"></span></div>
+	</div>
+</section>
+
+<div class="message">
+<span style="font-weight: bold;"></span>
+</div>
+<a href="#" class="button" onclick="save()">Save</a>
