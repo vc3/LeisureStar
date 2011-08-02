@@ -8,6 +8,40 @@
 	@Html.Raw(ExoWeb.Model(new {
 		teams = Team.All
 	}))
+
+	<script type="text/javascript">
+		function showMessage(message) {
+			var messageBox = $('.message');
+			messageBox.children('span').text(message);
+			messageBox.fadeIn();
+		}
+
+		function deleteEntity(entityId) {
+			if ($('.validated-some').length > 0) {
+				showMessage('There are unresolved validation errors. Please correct and try again.');
+			}
+			else {
+				var index = null;
+				context.model.teams.forEach(function (team, i) {
+					if (team.meta.id == entityId) {
+						index = team;
+					}
+				});
+
+				if (index != null) {
+					context.model.teams.remove(index);
+					context.server.save(
+						context.model.teams,
+						function success() {
+						},
+						function fail() {
+							showMessage('An error occurred while saving.');
+						}
+					);
+				}
+			}
+		}
+	</script>
 }
 
 <h2>Teams</h2>
@@ -26,7 +60,12 @@
 				<td class="readonly" sys:attach="content" content:data="{@@ Name}"></td>
 				<td class="readonly" sys:attach="content" content:data="{@@ Wins}"></td>
 				<td><a sys:href="{{ '@Url.Action("Edit", "Team")/' + $dataItem.meta.id }}">Edit</a></td>
+				<td><a href="#" class="button" sys:onclick="{{ 'deleteEntity(' + $dataItem.meta.id + ')' }}">Delete</a></td>
 	</tr>
 	</table>
 </section>
 <a href="@Url.Action("Edit", "Team")" class="button">Add</a>
+
+<div class="message">
+<span style="font-weight: bold;"></span>
+</div>
