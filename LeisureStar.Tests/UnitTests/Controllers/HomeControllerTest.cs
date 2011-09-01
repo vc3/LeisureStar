@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using LeisureStar;
-using LeisureStar.Controllers;
+using LeisureStarLevel2;
+using LeisureStarLevel2.Controllers;
 
 namespace LeisureStar.Tests.Controllers
 {
@@ -22,7 +22,7 @@ namespace LeisureStar.Tests.Controllers
 			ViewResult result = controller.Index() as ViewResult;
 
 			// Assert
-			Assert.AreEqual("Welcome to LeisureStar!", result.ViewBag.Message);
+			Assert.AreEqual("Welcome to LeisureStarLevel2!", result.ViewBag.Message);
 		}
 
 		[TestMethod]

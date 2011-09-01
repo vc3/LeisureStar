@@ -80,9 +80,13 @@
       <Project>{D5A5ACD6-F239-4FCA-A54B-861B6890A390}</Project>
       <Name>VC3.AutomatedTesting</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LeisureStar\LeisureStar.csproj">
+    <ProjectReference Include="..\LeisureStarLevel1\LeisureStarLevel1.csproj">
+      <Project>{2FF4E697-42FD-419D-940A-E6FA1C4B7301}</Project>
+      <Name>LeisureStarLevel1</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LeisureStarLevel2\LeisureStarLevel2.csproj">
       <Project>{FAF5AB55-1BF6-4DC6-B4BA-541E0BA952A6}</Project>
-      <Name>LeisureStar</Name>
+      <Name>LeisureStarLevel2</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
