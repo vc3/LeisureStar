@@ -51,9 +51,8 @@
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
-    <Reference Include="WatiN.Core, Version=2.0.20.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\VC3.Shared\Transitional\WatiN\2.1\bin\net40\WatiN.Core.dll</HintPath>
+    <Reference Include="WatiN.Core">
+      <HintPath>..\..\..\VC3.Shared\Transitional\WatiN\2.1\bin\net35\WatiN.Core.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -80,13 +79,9 @@
       <Project>{D5A5ACD6-F239-4FCA-A54B-861B6890A390}</Project>
       <Name>VC3.AutomatedTesting</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LeisureStarLevel1\LeisureStarLevel1.csproj">
-      <Project>{2FF4E697-42FD-419D-940A-E6FA1C4B7301}</Project>
-      <Name>LeisureStarLevel1</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\LeisureStarLevel2\LeisureStarLevel2.csproj">
+    <ProjectReference Include="..\LeisureStar\LeisureStar.csproj">
       <Project>{FAF5AB55-1BF6-4DC6-B4BA-541E0BA952A6}</Project>
-      <Name>LeisureStarLevel2</Name>
+      <Name>LeisureStar</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

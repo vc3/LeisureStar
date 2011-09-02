@@ -34,7 +34,7 @@ namespace LeisureStar.Tests.Pages
 
 		public Link CloseLink { get { return WaitForElement(() => Doc.Links.Filter(Find.ByClass("close")).First(link => IsVisible(link))); } }
 
-		protected override Document Doc
+		public override Document Doc
 		{
 			get
 			{
