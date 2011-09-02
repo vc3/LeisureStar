@@ -72,11 +72,11 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\VC3.Public\Amnesia\Amnesia.csproj">
+    <ProjectReference Include="..\..\Amnesia\Amnesia.csproj">
       <Project>{1A246932-199E-4DEE-8C7B-D5FBC3FF52C9}</Project>
       <Name>Amnesia</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\VC3.Shared\Transitional\VC3.AutomatedTesting\VC3.AutomatedTesting.csproj">
+    <ProjectReference Include="..\..\..\VC3.Shared\Transitional\VC3.AutomatedTesting\VC3.AutomatedTesting.csproj">
       <Project>{D5A5ACD6-F239-4FCA-A54B-861B6890A390}</Project>
       <Name>VC3.AutomatedTesting</Name>
     </ProjectReference>
