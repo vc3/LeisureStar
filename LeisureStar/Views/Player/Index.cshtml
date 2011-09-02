@@ -1,0 +1,75 @@
+﻿@{
+    ViewBag.Title = "List Players";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section startupScript
+{
+	@Html.Raw(ExoWeb.Model(new {
+		players = Player.All
+	}))
+
+	<script type="text/javascript">
+		function showMessage(message) {
+			var messageBox = $('.message');
+			messageBox.children('span').text(message);
+			messageBox.fadeIn();
+		}
+
+		function deleteEntity(entityId) {
+			if ($('.validated-some').length > 0) {
+				showMessage('There are unresolved validation errors. Please correct and try again.');
+			}
+			else {
+				var index = null;
+				context.model.players.forEach(function (player, i) {
+					if (player.meta.id == entityId) {
+						index = player;
+					}
+				});
+
+				if (index != null) {
+					context.model.players.remove(index);
+					context.server.save(
+						context.model.players,
+						function success() {
+						},
+						function fail() {
+							showMessage('An error occurred while saving.');
+						}
+					);
+				}
+			}
+		}
+	</script>
+}
+
+<h2>Players</h2>
+
+<section>
+	<table class="grid readonly">
+	<thead>
+	<tr>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Gender</th>
+				<th>Wins</th>
+				<th>&nbsp;</th>
+	</tr>
+	</thead>
+	<tbody class="sys-template" sys:attach="dataview" dataview:data="{~ model.players,source=window.context}">
+	<tr sys:class="{{ $index % 2 == 0 ? 'even' : '' }}">
+				<td class="readonly" sys:attach="content" content:data="{@@ FirstName}"></td>
+				<td class="readonly" sys:attach="content" content:data="{@@ LastName}"></td>
+				<td class="readonly" sys:attach="content" content:data="{@@ Gender}"></td>
+				<td class="readonly" sys:attach="content" content:data="{@@ Wins}"></td>
+				<td><a sys:href="{{ '@Url.Action("Edit", "Player")/' + $dataItem.meta.id }}">Edit</a></td>
+				<td><a href="#" class="button" sys:onclick="{{ 'deleteEntity(' + $dataItem.meta.id + ')' }}">Delete</a></td>
+	</tr>
+	</table>
+</section>
+<a href="@Url.Action("Edit", "Player")" class="button">Add</a>
+
+<div class="message">
+<span style="font-weight: bold;"></span>
+</div>

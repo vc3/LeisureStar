@@ -4,21 +4,24 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using LeisureStar.Models;
+using ExoGraph;
 
 namespace LeisureStar.Controllers
 {
-    public class PlayerController : Controller
-    {
-        //
-        // GET: /Player/
+	public class PlayerController : Controller
+	{
+		//
+		// GET: /Player/
 
-        public ActionResult Index()
-        {
-			LeisureStarDataContext context = LeisureStarDataContext.Current;
-			var players = from p in context.Players
-						  select p;
-            return View(players);
-        }
+		public ActionResult Index()
+		{
+			return View();
+		}
 
-    }
+		public ActionResult Edit(string id)
+		{
+			ViewData["Player"] = GraphContext.Create<Player>(id);
+			return View();
+		}
+	}
 }

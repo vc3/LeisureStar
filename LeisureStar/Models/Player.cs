@@ -31,7 +31,7 @@ namespace LeisureStar.Models
 		{
 			get
 			{
-				return ((List<Team>)Teams).Sum(t => t.Wins);
+				return Teams.Sum(t => t.Wins);
 			}
 		}
 
