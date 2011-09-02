@@ -5,32 +5,77 @@
 
 @section startupScript 
 {
-	@Html.Raw(ExoWeb.Model(new { player = ViewData["Player"].Include() },
-	(Player player) =>
-	{
-	}))
-		<script type="text/javascript">
-			function showMessage(message) {
-				var messageBox = $('.message');
-				messageBox.children('span').text(message);
-				messageBox.fadeIn();
-			}
-
-			function save() {
-				if ($('.validated-some').length > 0) {
-					showMessage('There are unresolved validation errors. Please correct and try again.');
-				}
-				else {
-					context.server.save(
-					context.model.player,
-					function success() {
-						document.location.href = '@Url.Action("Index", "Player")';
+	@Html.Raw(ExoWeb.Model(
+				new { player = ExoWeb.Query<Player>(ViewData["Id"].ToString(),
+													"this.FirstName",
+													"this.LastName",
+													"this.Gender",
+													"this.Wins",
+													"this.Teams"),
+													
+					  allteams = Team.All.Include("Team.All")
 					},
-					function fail() {
-						showMessage('An error occurred while saving.');
-					});
-				}
+					(Player player) =>{}
+			))
+
+	<script type="text/javascript">
+		function showMessage(message) {
+			var messageBox = $('.message');
+			messageBox.children('span').text(message);
+			messageBox.fadeIn();
+		}
+
+		function save() {
+			if ($('.validated-some').length > 0) {
+				showMessage('There are unresolved validation errors. Please correct and try again.');
 			}
+			else {
+				context.server.save(
+				context.model.player,
+				function success() {
+					document.location.href = '@Url.Action("Index", "Player")';
+				},
+				function fail() {
+					showMessage('An error occurred while saving.');
+				});
+			}
+		}
+
+		function addTeam(team) {
+			if (!context.model.player.get_Teams().contains(team)) {
+				context.model.player.get_Teams().add(team);
+
+				//to get the allteams portion of the page to re-render
+				//remove the element and readd it
+				context.model.allteams.remove(team);
+				context.model.allteams.add(team);
+			}
+		}
+
+		function removeTeam(team) {
+			context.model.player.get_Teams().remove(team);
+			
+			//to get the allteams portion of the page to re-render
+			//remove the element and readd it
+			context.model.allteams.remove(team);
+			context.model.allteams.add(team);
+		}
+
+		$exoweb({
+			contextReady: function () {
+				$extend('Player', function (type) {
+					type.meta.addProperty({
+						name: 'FullName',
+						type: String
+					}).calculated({
+						fn: function () {
+							return $.trim((this._FirstName === null ? "" : this._FirstName) + (this._LastName === null ? "" : " " + this._LastName));
+						},
+						basedOn: ['this.FirstName', 'this.LastName']
+					});
+				});
+			}
+		});
 	</script>
 }
 
@@ -40,10 +85,29 @@
 		<div class="field"><span sys:attach="content" content:data="{@@ FirstName }"></span></div>
 		<div class="field"><span sys:attach="content" content:data="{@@ LastName }"></span></div>
 		<div class="field"><span sys:attach="content" content:data="{@@ Gender }"></span></div>
+		<p />
+
+		<div sys:attach="toggle" toggle:on="{~ Teams }" toggle:when="{{ function(item){ return item.length > 0; } }}" toggle:action="show">
+			<span style="font-weight: bold;">Current Teams:</span>
+			<div class="sys-template" sys:attach="dataview" dataview:data="{~ Teams }">
+				<span class="arrow-s" style="font-size:1em;" onclick="removeTeam($parentContextData(this));"></span>
+				<div class="readonly" sys:style="display: inline;"><span sys:attach="content" content:data="{@@ Name }"></span></div>
+				<br />
+			</div>
+		</div>
+	</div>
+
+	<p />
+	<span style="font-weight: bold;">Available Teams:</span>
+	<div class="sys-template allTeams" sys:attach="dataview" dataview:data="{~ model.allteams, source=window.context, transform=where(function(item){ return !context.model.player.get_Teams().contains(item);  }) }">
+		<span class="arrow-n" style="font-size:1em; margin-top:-0.4em;" onclick="addTeam($parentContextData(this));"></span>
+		<div class="readonly" sys:style="display: inline;"><span sys:attach="content" content:data="{@@ Name }"></span></div>
+		<br />
 	</div>
 </section>
 
 <div class="message">
 <span style="font-weight: bold;"></span>
 </div>
+<p />
 <a href="#" class="button" onclick="save()">Save</a>

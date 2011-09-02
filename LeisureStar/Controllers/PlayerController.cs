@@ -20,7 +20,7 @@ namespace LeisureStar.Controllers
 
 		public ActionResult Edit(string id)
 		{
-			ViewData["Player"] = GraphContext.Create<Player>(id);
+			ViewData["Id"] = id;
 			return View();
 		}
 	}

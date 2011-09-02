@@ -5,10 +5,17 @@
 
 @section startupScript 
 {
-	@Html.Raw(ExoWeb.Model(new { team = ViewData["Team"].Include() },
-	(Team team) =>
-	{
-	}))
+	@Html.Raw(ExoWeb.Model(
+				new { team = ExoWeb.Query<Team>(ViewData["Id"].ToString(),
+													"this.Name",
+													"this.Wins",
+													"this.Players"),
+
+					  allplayers = Player.All.Include("Player.All")
+					},
+					(Team team) =>{}
+			))
+
 		<script type="text/javascript">
 			function showMessage(message) {
 				var messageBox = $('.message');
@@ -31,6 +38,42 @@
 					});
 				}
 			}
+
+			function addPlayer(player) {
+				if (!context.model.team.get_Players().contains(player)) {
+					context.model.team.get_Players().add(player);
+
+					//to get the allPlayers portion of the page to re-render
+					//remove the element and readd it
+					context.model.allplayers.remove(player);
+					context.model.allplayers.add(player);
+				}
+			}
+
+			function removePlayer(player) {
+				context.model.team.get_Players().remove(player);
+
+				//to get the allPlayers portion of the page to re-render
+				//remove the element and readd it
+				context.model.allplayers.remove(player);
+				context.model.allplayers.add(player);
+			}
+
+			$exoweb({
+				contextReady: function() {
+					$extend('Player', function (type) {
+						type.meta.addProperty({
+							name: 'FullName',
+							type: String
+						}).calculated({
+							fn: function () {
+								return $.trim((this._FirstName === null ? "" : this._FirstName) + (this._LastName === null ? "" : " " + this._LastName));
+							},
+							basedOn: ['this.FirstName', 'this.LastName']
+						});
+					});
+				}
+			});
 	</script>
 }
 
@@ -38,6 +81,24 @@
 <section>
 	<div class="sys-template" sys:attach="dataview" dataview:data="{~ model.team, source=window.context}">
 		<div class="field"><span sys:attach="content" content:data="{@@ Name }"></span></div>
+		<p />
+
+		<div sys:attach="toggle" toggle:on="{~ Players }" toggle:when="{{ function(item){ return item.length > 0; } }}" toggle:action="show">
+			<span style="font-weight: bold;">Current Players:</span>
+			<div class="sys-template" sys:attach="dataview" dataview:data="{~ Players }">
+				<span class="arrow-s" style="font-size:1em;" onclick="removePlayer($parentContextData(this));"></span>
+				<div class="readonly" sys:style="display: inline;"><span sys:attach="content" content:data="{@@ FullName }"></span></div>
+				<br />
+			</div>
+		</div>
+	</div>
+
+	<p />
+	<span style="font-weight: bold;">Available Teams:</span>
+	<div class="sys-template allTeams" sys:attach="dataview" dataview:data="{~ model.allplayers, source=window.context, transform=where(function(item){ return !context.model.team.get_Players().contains(item);  }) }">
+		<span class="arrow-n" style="font-size:1em; margin-top:-0.4em;" onclick="addPlayer($parentContextData(this));"></span>
+		<div class="readonly" sys:style="display: inline;"><span sys:attach="content" content:data="{@@ FullName }"></span></div>
+		<br />
 	</div>
 </section>
 

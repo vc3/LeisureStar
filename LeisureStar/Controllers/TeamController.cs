@@ -17,7 +17,7 @@ namespace LeisureStar.Controllers
 
 		public ActionResult Edit(string id)
 		{
-			ViewData["Team"] = GraphContext.Create<Team>(id);
+			ViewData["Id"] = id;
 			return View();
 		}
 	}
