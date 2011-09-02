@@ -7,18 +7,18 @@ using LeisureStar.Models;
 
 namespace LeisureStar.Controllers
 {
-    public class GameController : Controller
-    {
-        //
-        // GET: /Game/
+	public class GameController : Controller
+	{
+		//
+		// GET: /Game/
 
-        public ActionResult Index()
-        {
+		public ActionResult Index()
+		{
 			LeisureStarDataContext context = LeisureStarDataContext.Current;
 			var games = from p in context.Games
 						  select p;
 			return View(games);
-        }
+		}
 
-    }
+	}
 }

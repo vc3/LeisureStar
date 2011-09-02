@@ -20,5 +20,5 @@ namespace LeisureStar.Controllers
 			ViewData["Team"] = GraphContext.Create<Team>(id);
 			return View();
 		}
-    }
+	}
 }
