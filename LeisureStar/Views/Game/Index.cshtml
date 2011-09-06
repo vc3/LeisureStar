@@ -1,46 +1,75 @@
-﻿@model IEnumerable<LeisureStar.Models.Game>
-
-@{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+﻿@{
+	ViewBag.Title = "List Games";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+@section startupScript
+{
+	@Html.Raw(ExoWeb.Model(new {
+		games = Game.All
+	}))
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table>
-    <tr>
-        <th>
-            Name
-        </th>
-        <th>
-            Started
-        </th>
-        <th>
-            Finished
-        </th>
-        <th></th>
-    </tr>
+	<script type="text/javascript">
+		function showMessage(message) {
+			var messageBox = $('.message');
+			messageBox.children('span').text(message);
+			messageBox.fadeIn();
+		}
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Started)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Finished)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.GameId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.GameId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.GameId })
-        </td>
-    </tr>
+		function deleteEntity(entityId) {
+			if ($('.validated-some').length > 0) {
+				showMessage('There are unresolved validation errors. Please correct and try again.');
+			}
+			else {
+				var index = null;
+				context.model.games.forEach(function (game, i) {
+					if (game.meta.id == entityId) {
+						index = game;
+					}
+				});
+
+				if (index != null) {
+					context.model.games.remove(index);
+					context.server.save(
+						context.model.games,
+						function success() {
+						},
+						function fail() {
+							showMessage('An error occurred while saving.');
+						}
+					);
+				}
+			}
+		}
+	</script>
 }
 
-</table>
+<h2>Games</h2>
+
+<section>
+	<table class="grid readonly">
+	<thead>
+	<tr>
+				<th>Name</th>
+				<th>Start Date</th>
+				<th>End Date</th>
+				<th>Winner</th>
+				<th>&nbsp;</th>
+	</tr>
+	</thead>
+	<tbody class="sys-template" sys:attach="dataview" dataview:data="{~ model.games,source=window.context}">
+	<tr sys:class="{{ $index % 2 == 0 ? 'even' : '' }}">
+				<td class="readonly" sys:attach="content" content:data="{@@ Name}"></td>
+				<td class="readonly" sys:attach="content" content:data="{@@ Started}"></td>
+				<td class="readonly" sys:attach="content" content:data="{@@ Finished}"></td>
+				<td class="readonly" sys:attach="content" content:data="{@@ Winner}"></td>
+				<td><a sys:href="{{ '@Url.Action("Edit", "Game")/' + $dataItem.meta.id }}">Edit</a></td>
+				<td><a href="#" class="button" sys:onclick="{{ 'deleteEntity(' + $dataItem.meta.id + ')' }}">Delete</a></td>
+	</tr>
+	</table>
+</section>
+<a href="@Url.Action("Edit", "Game")" class="button">Add</a>
+
+<div class="message">
+<span style="font-weight: bold;"></span>
+</div>

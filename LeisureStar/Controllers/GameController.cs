@@ -11,13 +11,15 @@ namespace LeisureStar.Controllers
 	{
 		//
 		// GET: /Game/
-
 		public ActionResult Index()
 		{
-			LeisureStarDataContext context = LeisureStarDataContext.Current;
-			var games = from p in context.Games
-						  select p;
-			return View(games);
+			return View();
+		}
+
+		public ActionResult Edit(string id)
+		{
+			ViewData["Id"] = id;
+			return View();
 		}
 
 	}
