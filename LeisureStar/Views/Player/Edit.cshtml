@@ -6,7 +6,7 @@
 @section startupScript 
 {
 	@Html.Raw(ExoWeb.Model(
-				new { player = ExoWeb.Query<Player>(ViewData["Id"].ToString(),
+						new { player = ExoWeb.Query<Player>(ViewData["Id"] != null ? ViewData["Id"].ToString() : null,
 													"this.FirstName",
 													"this.LastName",
 													"this.Gender",
