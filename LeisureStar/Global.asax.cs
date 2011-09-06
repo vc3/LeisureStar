@@ -39,7 +39,7 @@ namespace LeisureStar
 
 		protected void Application_Start()
 		{
-			System.Diagnostics.Debugger.Launch();
+			//System.Diagnostics.Debugger.Launch();
 			new GraphContextProvider().CreateContext += (source, args) =>
 			{
 				Assembly coreAssembly = typeof(LeisureStar.Models.Player).Assembly;
