@@ -324,9 +324,8 @@ div#title {
 	width: 6em;
 }
 
-.validation-alert  { color:#990000; }
+.validation-some  { color:#990000; }
 .validation-none{ display: none; }
-.validation-warning{ color:#C60 }
 
 /* css retrieved from http://hedgerwow.appspot.com/demo/arrows */
 .arrow-n,

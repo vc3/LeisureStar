@@ -20,7 +20,7 @@ namespace LeisureStar.Models
 		[Required]
 		public string LastName { get; set; }
 
-		//[Required]
+		[Required]
 		[AllowedValues("Gender.All")]
 		public virtual Gender Gender { get; set; }
 

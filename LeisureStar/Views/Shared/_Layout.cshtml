@@ -11,7 +11,7 @@
 	<script src="@Url.Content("~/Scripts/exoweb-msajax.js?cachehash=" + ExoWeb.CacheHash)" type="text/javascript"></script>
 	<script type="text/javascript">
 		$exoweb({
-			init: function () {
+			contextReady: function () {
 				ExoWeb.UI.Template.load('@Url.Content("~/Scripts/exoweb.templates.htm")' + "?cachehash=" + ExoWeb.cacheHash);
 			}
 		});
@@ -44,6 +44,52 @@
 
 			$("input.datepicker:bound").ever(createDatePicker);
 		});
+	</script>
+	
+	<!-- Add default validation display -->
+	<script type="text/javascript">
+
+		function setState(el, prefix, current, all) {
+			all.forEach(function (state) {
+				if (current === state)
+					el.addClass(prefix + "-" + state);
+				else
+					el.removeClass(prefix + "-" + state);
+			});
+		}
+
+		$("input:bound, select:bound, textarea:bound").ever(function () {
+			$(this).validated(function (sender, issues) {
+
+				// locate validation area
+				var $area = $(this).closest(".field");
+				var $validation = $area.find(".validation");
+
+				if ($validation.size() == 0) {
+					$validation = $(this).next();
+
+					if (!$validation.is('.validation')) {
+						// container not found so inject it
+						$validation = $(this).after("<div class='validation'></div>").next();
+					}
+				}
+
+				var states = ["some", "none"];
+
+				if (issues.length == 0) {
+					setState($(this), "validated", "none", states);
+					setState($validation, "validation", "none", states);
+					setState($area, "validated", "none", states);
+				} else {
+					setState($(this), "validated", "some", states);
+					setState($validation, "validation", "some", states);
+					setState($area, "validated", "some", states);
+
+					$validation.text(issues[0].get_message());
+				}
+			});
+		});
+	
 	</script>
 	@RenderSection("startupScript", required: false)
 </head>
