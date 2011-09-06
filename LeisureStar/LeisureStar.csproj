@@ -76,6 +76,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Gender.cs" />
     <Compile Include="Models\LeisureStarDataContext.cs" />
     <Compile Include="Models\Game.cs" />
     <Compile Include="Models\LeisureStarDataContextInitializer.cs" />

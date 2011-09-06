@@ -18,8 +18,10 @@ namespace LeisureStar.Models
 		public string Name { get; set; }
 
 		[Required]
+		[DisplayFormat(DataFormatString = "ShortDate")]
 		public DateTime Started { get; set; }
 
+		[DisplayFormat(DataFormatString = "ShortDate")]
 		public DateTime Finished { get; set; }
 
 		[NotMapped]

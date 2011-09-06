@@ -8,12 +8,41 @@
 	<script src="@Url.Content("~/Scripts/modernizr-1.7.min.js")" type="text/javascript"></script>
 	<script src="@Url.Content("~/Scripts/MicrosoftAjax.js")" type="text/javascript"></script>
 	<script src="@Url.Content("~/Scripts/MicrosoftAjaxTemplates.debug.js")" type="text/javascript"></script>
-	<script src="@Url.Content("~/Scripts/exoweb-msajax.js")" type="text/javascript"></script>
+	<script src="@Url.Content("~/Scripts/exoweb-msajax.js?cachehash=" + ExoWeb.CacheHash)" type="text/javascript"></script>
 	<script type="text/javascript">
 		$exoweb({
 			init: function () {
-				ExoWeb.UI.Template.load('@Url.Content("~/Scripts/exoweb.templates.htm")');
+				ExoWeb.UI.Template.load('@Url.Content("~/Scripts/exoweb.templates.htm")' + "?cachehash=" + ExoWeb.cacheHash);
 			}
+		});
+	</script>
+	<script>
+		$(function () {
+			function createDatePicker() {
+				$(this).datepicker({
+					minDate: new Date('1/1/0001'),
+					maxDate: new Date('12/31/9999'),
+					yearRange: '-110:+50',
+					duration: 0,
+					dateFormat: 'm/d/yy',
+					showOn: 'button',
+					changeYear: true,
+					changeMonth: true,
+					onSelect: function (val, control) {
+						// jquery trigger doesn't seem to raise the event
+						// properly, so raise it here
+						var el = $(this).get(0);
+						if (el.fireEvent) { el.fireEvent("onchange"); }
+						else if (el.dispatchEvent) {
+							var evt = document.createEvent("MutationEvents");
+							evt.initEvent("change", false, true);
+							el.dispatchEvent(evt);
+						}
+					}
+				});
+			}
+
+			$("input.datepicker:bound").ever(createDatePicker);
 		});
 	</script>
 	@RenderSection("startupScript", required: false)

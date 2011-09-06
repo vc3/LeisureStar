@@ -9,6 +9,8 @@ using System.Reflection;
 using ExoGraph.EntityFramework;
 using LeisureStar.Models;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 
 namespace LeisureStar
 {
@@ -25,6 +27,7 @@ namespace LeisureStar
 		public static void RegisterRoutes(RouteCollection routes)
 		{
 			routes.IgnoreRoute("{*allHandlers}", new { allHandlers = @".*\.axd(/.*)?" });
+			routes.IgnoreRoute("{*allsvc}", new { allsvc = @".*\.svc(/.*)?" });
 
 			routes.MapRoute(
 				"Default", // Route name
@@ -36,10 +39,10 @@ namespace LeisureStar
 
 		protected void Application_Start()
 		{
-			//System.Diagnostics.Debugger.Launch();
+			System.Diagnostics.Debugger.Launch();
 			new GraphContextProvider().CreateContext += (source, args) =>
 			{
-				Assembly coreAssembly = typeof(MvcApplication).Assembly;
+				Assembly coreAssembly = typeof(LeisureStar.Models.Player).Assembly;
 				args.Context = new GraphContext(new EntityFrameworkGraphTypeProvider(() => new LeisureStarDataContext()));
 				ExoRule.Rule.RegisterRules(coreAssembly);
 			};
@@ -56,12 +59,23 @@ namespace LeisureStar
 			//of DropCreateDatabaseAlways because the DbContext and GraphContext are
 			//so closely coupled.
 			Database.SetInitializer<LeisureStarDataContext>(new DropCreateDatabaseAlways<LeisureStarDataContext>());
-			SeedDBDatabase();
+			SeedDatabase();
 		}
 
-		private void SeedDBDatabase()
+		private void SeedDatabase()
 		{
 			//System.Diagnostics.Debugger.Launch();
+			List<Gender> genders = new List<Gender>
+			{
+				new Gender { Name="Male"
+				},
+				new Gender { Name="Female"
+				},
+			};
+
+			genders.ForEach(g => LeisureStarDataContext.Current.Genders.Add(g));
+			LeisureStarDataContext.Current.SaveChanges();
+
 			List<Team> teams = new List<Team>
 			{
 				new Team { Name="Team 1",
@@ -83,37 +97,39 @@ namespace LeisureStar
 			{
 				new Player { FirstName = "Babe",
 							 LastName = "Ruth",
-							 Gender = "Male",
 							 Teams = new List<Team>() },
 				new Player { FirstName = "Jackie",
 							 LastName = "Robinson",
-							 Gender = "Male",
 							 Teams = new List<Team>() },
 				new Player { FirstName = "Kirby",
 							 LastName = "Puckett",
-							 Gender = "Male",
 							 Teams = new List<Team>() },
 				new Player { FirstName = "Cal",
 							 LastName = "Ripken Jr",
-							 Gender = "Male",
 							 Teams = new List<Team>() },
 				new Player { FirstName = "Lou",
 							 LastName = "Gehrig",
-							 Gender = "Male",
 							 Teams = new List<Team>() },
 				new Player { FirstName = "Ty",
 							 LastName = "Cobb",
-							 Gender = "Male",
 							 Teams = new List<Team>() },
 				new Player { FirstName = "Barry",
 							 LastName = "Bonds",
-							 Gender = "Male",
 							 Teams = new List<Team>() },
 				new Player { FirstName = "Nolan",
 							 LastName = "Ryan",
-							 Gender = "Male",
+
 							 Teams = new List<Team>() }
 			};
+
+			genders[0].Players.Add(players[0]);
+			genders[0].Players.Add(players[1]);
+			genders[0].Players.Add(players[2]);
+			genders[0].Players.Add(players[3]);
+			genders[0].Players.Add(players[4]);
+			genders[0].Players.Add(players[5]);
+			genders[0].Players.Add(players[6]);
+			genders[0].Players.Add(players[7]);
 
 			//match up players and teams
 			teams[0].Players.Add(players[0]);
@@ -274,7 +290,30 @@ namespace LeisureStar
 			teams[3].Scores.Add(scores[15]);
 
 			games.ForEach(g => LeisureStarDataContext.Current.Games.Add(g));
-			LeisureStarDataContext.Current.SaveChanges();
+
+			try
+			{
+				LeisureStarDataContext.Current.SaveChanges();
+			}
+			catch (DbEntityValidationException dbEx)
+			{
+				// Creates the text file that the trace listener will write to.
+				System.IO.FileStream myTraceLog = new System.IO.FileStream("C:\\Projects\\VC3.Public\\LeisureStar\\LeisureStarDataValidationErrorLog.txt", System.IO.FileMode.OpenOrCreate);
+				
+				// Creates the new trace listener.
+				System.Diagnostics.TextWriterTraceListener myListener = new System.Diagnostics.TextWriterTraceListener(myTraceLog);
+				System.Diagnostics.Trace.Listeners.Add(myListener);
+
+				foreach (var validationErrors in dbEx.EntityValidationErrors)
+				{
+					foreach (var validationError in validationErrors.ValidationErrors)
+					{
+						Trace.TraceInformation("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
+					}
+				}
+
+				Trace.Close();
+			}
 		}
 	}
 }

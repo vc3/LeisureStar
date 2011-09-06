@@ -11,9 +11,8 @@
 													"this.LastName",
 													"this.Gender",
 													"this.Wins",
-													"this.Teams"),
-													
-					  allteams = Team.All.Include("Team.All")
+													"this.Teams").Include("Gender.All"),							
+						allteams = Team.All
 					},
 					(Player player) =>{}
 			))

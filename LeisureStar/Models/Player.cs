@@ -20,21 +20,15 @@ namespace LeisureStar.Models
 		[Required]
 		public string LastName { get; set; }
 
-		[Required]
-		public string Gender { get; set; }
+		//[Required]
+		[AllowedValues("Gender.All")]
+		public virtual Gender Gender { get; set; }
 
 		[NotMapped]
 		public bool HasWon { get { return Wins > 0; } }
 
-		[NotMapped]
-		public int Wins 
-		{
-			get
-			{
-				return Teams.Sum(t => t.Wins);
-			}
-		}
-
+		public int Wins { get; set; }
+		
 		public static Player[] All
 		{
 			get
