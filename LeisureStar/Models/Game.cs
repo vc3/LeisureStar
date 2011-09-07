@@ -46,5 +46,14 @@ namespace LeisureStar.Models
 				return LeisureStarDataContext.Current.Games.ToArray();
 			}
 		}
+
+		/// <summary>
+		/// Deletes an instance of the current Player
+		/// </summary>
+		public void DeleteInstance()
+		{
+			LeisureStarDataContext.Current.Games.Remove(this);
+			LeisureStarDataContext.Current.SaveChanges();
+		}
 	}
 }

@@ -17,28 +17,16 @@
 		}
 
 		function deleteEntity(entityId) {
-			if ($('.validated-some').length > 0) {
-				showMessage('There are unresolved validation errors. Please correct and try again.');
-			}
-			else {
-				var index = null;
-				context.model.players.forEach(function (player, i) {
-					if (player.meta.id == entityId) {
-						index = player;
-					}
-				});
-
-				if (index != null) {
-					context.model.players.remove(index);
-					context.server.save(
-						context.model.players,
-						function success() {
-						},
-						function fail() {
-							showMessage('An error occurred while saving.');
-						}
-					);
+			var entity = null;
+			context.model.players.forEach(function (player, i) {
+				if (player.meta.id == entityId) {
+					entity = player;
 				}
+			});
+
+			if (entity != null) {
+				context.model.players.remove(entity);
+				entity.DeleteInstance();
 			}
 		}
 	</script>
