@@ -46,6 +46,7 @@
 		<th>Winner</th>
 		<th>&nbsp;</th>
 		<th>&nbsp;</th>
+		<th>&nbsp;</th>
 	</tr>
 	</thead>
 	<tbody class="sys-template" sys:attach="dataview" dataview:data="{~ model.games,source=window.context}">
@@ -57,11 +58,19 @@
 				<td class="readonly" sys:attach="content" content:data="{@@ NumberOfPlayersPerTeam}"></td>
 				<td class="readonly" sys:attach="content" content:data="{@@ Winner}"></td>
 				<td>
-					<div sys:attach="toggle" toggle:on="{~ Finished }" toggle:when="{{ !null }}" toggle:action="show">
+					<div sys:attach="toggle" toggle:on="{~ Finished }" toggle:when="{{ function(item){ return item === undefined || item === null; } }}" toggle:action="show">
 						<a sys:href="{{ '@Url.Action("Edit", "Game")/' + $dataItem.meta.id }}">Edit</a>
 					</div>
-					<div sys:attach="toggle" toggle:on="{~ Finished }" toggle:when="{{ !null }}" toggle:action="hide">
+					<div sys:attach="toggle" toggle:on="{~ Finished }" toggle:when="{{ function(item){ return item !== undefined && item !== null; } }}" toggle:action="show">
 						Locked
+					</div>
+				</td>
+				<td>
+					<div sys:attach="toggle" toggle:on="{~ Finished }" toggle:when="{{ function(item){ return item === undefined || item === null; } }}" toggle:action="show">
+						<a sys:href="{{ '@Url.Action("Play", "Game")/' + $dataItem.meta.id }}">Play</a>
+					</div>
+					<div sys:attach="toggle" toggle:on="{~ Finished }" toggle:when="{{ function(item){ return item !== undefined && item !== null; } }}" toggle:action="show">
+						<a sys:href="{{ '@Url.Action("ViewResults", "Game")/' + $dataItem.meta.id }}">View Results</a>
 					</div>
 				</td>
 				<td><a href="#" class="button" sys:onclick="{{ 'deleteEntity(' + $dataItem.meta.id + ')' }}">Delete</a></td>
