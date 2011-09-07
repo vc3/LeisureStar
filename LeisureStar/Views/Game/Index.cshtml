@@ -38,11 +38,14 @@
 	<table class="grid readonly">
 	<thead>
 	<tr>
-				<th>Name</th>
-				<th>Start Date</th>
-				<th>End Date</th>
-				<th>Winner</th>
-				<th>&nbsp;</th>
+		<th>Name</th>
+		<th>Start Date</th>
+		<th>End Date</th>
+		<th>Number of Teams Playing</th>
+		<th>Number of Players per Team</th>
+		<th>Winner</th>
+		<th>&nbsp;</th>
+		<th>&nbsp;</th>
 	</tr>
 	</thead>
 	<tbody class="sys-template" sys:attach="dataview" dataview:data="{~ model.games,source=window.context}">
@@ -50,8 +53,17 @@
 				<td class="readonly" sys:attach="content" content:data="{@@ Name}"></td>
 				<td class="readonly" sys:attach="content" content:data="{@@ Started}"></td>
 				<td class="readonly" sys:attach="content" content:data="{@@ Finished}"></td>
+				<td class="readonly" sys:attach="content" content:data="{@@ NumberOfTeamsPlaying}"></td>
+				<td class="readonly" sys:attach="content" content:data="{@@ NumberOfPlayersPerTeam}"></td>
 				<td class="readonly" sys:attach="content" content:data="{@@ Winner}"></td>
-				<td><a sys:href="{{ '@Url.Action("Edit", "Game")/' + $dataItem.meta.id }}">Edit</a></td>
+				<td>
+					<div sys:attach="toggle" toggle:on="{~ Finished }" toggle:when="{{ !null }}" toggle:action="show">
+						<a sys:href="{{ '@Url.Action("Edit", "Game")/' + $dataItem.meta.id }}">Edit</a>
+					</div>
+					<div sys:attach="toggle" toggle:on="{~ Finished }" toggle:when="{{ !null }}" toggle:action="hide">
+						Locked
+					</div>
+				</td>
 				<td><a href="#" class="button" sys:onclick="{{ 'deleteEntity(' + $dataItem.meta.id + ')' }}">Delete</a></td>
 	</tr>
 	</table>

@@ -80,7 +80,7 @@
 <h2>Edit Team</h2>
 <section>
 	<div class="sys-template" sys:attach="dataview" dataview:data="{~ model.team, source=window.context}">
-		<div class="field"><span sys:attach="content" content:data="{@@ Name }"></span></div>
+		<div class="fieldwithlabel"><span sys:attach="content" content:data="{@@ Name }"></span></div>
 		<p />
 
 		<div sys:attach="toggle" toggle:on="{~ Players }" toggle:when="{{ function(item){ return item.length > 0; } }}" toggle:action="show">

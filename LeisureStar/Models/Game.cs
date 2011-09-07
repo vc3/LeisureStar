@@ -19,10 +19,18 @@ namespace LeisureStar.Models
 
 		[Required]
 		[DisplayFormat(DataFormatString = "ShortDate")]
-		public DateTime Started { get; set; }
+		public DateTime? Started { get; set; }
 
 		[DisplayFormat(DataFormatString = "ShortDate")]
-		public DateTime Finished { get; set; }
+		public DateTime? Finished { get; set; }
+
+		[Required]
+		[Range(1, 10)]
+		public int NumberOfTeamsPlaying { get; set; }
+
+		[Required]
+		[Range(1, 10)]
+		public int NumberOfPlayersPerTeam { get; set; }
 
 		[NotMapped]
 		public Team Winner

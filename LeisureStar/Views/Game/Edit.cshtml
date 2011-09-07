@@ -1,6 +1,66 @@
 ﻿@{
-    ViewBag.Title = "Edit";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Title = "Edit Game";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Edit</h2>
+@section startupScript 
+{
+	@Html.Raw(ExoWeb.Model(
+						new { game = ExoWeb.Query<Game>(ViewData["Id"] != null ? ViewData["Id"].ToString() : null,
+													"this.Name",
+													"this.Scores",
+													"this.Started",
+													"this.Finished",
+													"this.NumberOfTeamsPlaying",
+													"this.NumberOfPlayersPerTeam",
+													"this.Winner"),
+						allteams = Team.All
+					},
+					(Game game) =>{}
+			))
+
+	<script type="text/javascript">
+		function showMessage(message) {
+			var messageBox = $('.message');
+			messageBox.children('span').text(message);
+			messageBox.fadeIn();
+		}
+
+		function save() {
+			if ($('.validated-some').length > 0) {
+				showMessage('There are unresolved validation errors. Please correct and try again.');
+			}
+			else {
+				context.server.save(
+				context.model.game,
+				function success() {
+					document.location.href = '@Url.Action("Index", "Game")';
+				},
+				function fail() {
+					showMessage('An error occurred while saving.');
+				});
+			}
+		}
+	</script>
+}
+
+<h2>Edit Game</h2>
+<section>
+	<div class="sys-template" sys:attach="dataview" dataview:data="{~ model.game, source=window.context}">
+		<div class="fieldwithlabel"><span sys:attach="content" content:data="{@@ Name }"></span></div>
+		<div class="fieldwithlabel"><span sys:attach="content" content:data="{@@ Started }"></span></div>
+		<div class="fieldwithlabel"><span sys:attach="content" content:data="{@@ Finished }"></span></div>
+		<div class="fieldwithlabel"><span sys:attach="content" content:data="{@@ NumberOfTeamsPlaying }"></span></div>
+		<div class="fieldwithlabel"><span sys:attach="content" content:data="{@@ NumberOfPlayersPerTeam }"></span></div>
+		<p />
+
+	</div>
+
+</section>
+
+<p />
+<div class="message">
+<span style="font-weight: bold;"></span>
+</div>
+<p />
+<a href="#" class="button" onclick="save()">Save</a>

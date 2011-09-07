@@ -101,6 +101,12 @@
 	<input type='text' sys:value="{ binding displayValue }" />
 </span>
 
+<!-- *, default -->
+<span class="sys-template" sys:attach="template" template:for=".fieldwithlabel span" template:datatype="ExoWeb.View.Adapter">
+	<div class='label' style="width:150px;">{binding label}</div>    
+	<div class='field'><span sys:attach="content" content:data="{~ }"></span></div>
+</span>
+
 <!-- form layouts -->
 <div class="sys-template field" sys:attach="template" template:for=".normalform div" template:datatype="ExoWeb.View.Adapter">
 	<div class='label' style="width:150px;">{binding label}</div>    
