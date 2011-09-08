@@ -1,6 +1,68 @@
 ﻿@{
-    ViewBag.Title = "ViewResults";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Title = "ViewResults";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>ViewResults</h2>
+@section startupScript 
+{
+	@Html.Raw(ExoWeb.Model(
+						new { game = ExoWeb.Query<Game>(ViewData["Id"] != null ? ViewData["Id"].ToString() : null,
+													"this.Name",
+													"this.Scores",
+													"this.Started",
+													"this.Finished",
+													"this.NumberOfTeamsPlaying",
+													"this.NumberOfPlayersPerTeam",
+													"this.Winner").Include("Team.All").Include("Player.All")
+					},
+					(Game game) =>{}
+			))
+	
+	<script>
+		$exoweb({
+			contextReady: function () {
+				$extend('Player', function (type) {
+					type.meta.addProperty({
+						name: 'FullName',
+						type: String
+					}).calculated({
+						fn: function () {
+							return $.trim((this._FirstName === null ? "" : this._FirstName) + (this._LastName === null ? "" : " " + this._LastName));
+						},
+						basedOn: ['this.FirstName', 'this.LastName']
+					});
+				});
+			}
+		});
+	</script>
+}
+
+<h2>Results</h2>
+<section>
+	<div class="sys-template" sys:attach="dataview" dataview:data="{~ model.game, source=window.context}">
+		<div class="readonlywithlabel"><span sys:attach="content" content:data="{@@ Name }"></span></div>
+		<div class="readonlywithlabel"><span sys:attach="content" content:data="{@@ Started, label=Start Date }"></span></div>
+		<div class="readonlywithlabel"><span sys:attach="content" content:data="{@@ Finished, label=Finished Date }"></span></div>
+		<div class="readonlywithlabel"><span sys:attach="content" content:data="{@@ NumberOfTeamsPlaying, label=Teams Involved }"></span></div>
+		<div class="readonlywithlabel"><span sys:attach="content" content:data="{@@ NumberOfPlayersPerTeam, label=Players per Team }"></span></div>
+		<p />
+
+		<span style="font-weight: bold;">Scores:</span>
+		<table class="grid readonly">
+			<thead>
+			<tr>
+				<th>Player</th>
+				<th>Team</th>
+				<th>Points</th>
+			</tr>
+			</thead>
+			<tbody class="sys-template" sys:attach="dataview" dataview:data="{~ Scores, transform=orderBy('Team.Name') }">
+			<tr sys:class="{{ $index % 2 == 0 ? 'even' : '' }}">
+						<td class="readonly" sys:attach="content" content:data="{@@ Player.FullName}"></td>
+						<td class="readonly" sys:attach="content" content:data="{@@ Team.Name}"></td>
+						<td class="readonly" sys:attach="content" content:data="{@@ Value}"></td>
+			</tr>
+		</table>
+	</div>
+
+</section>

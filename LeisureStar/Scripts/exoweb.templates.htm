@@ -107,6 +107,12 @@
 	<div class='field'><span sys:attach="content" content:data="{~ }"></span></div>
 </span>
 
+<!-- readonlywithlabel -->
+<span class="sys-template" sys:attach="template" template:for=".readonlywithlabel span, span.readonlywithlabel">
+	<span class='label' style="width:150px;">{binding label}</span>
+	<span sys:innerText="{ binding displayValue }"></span>
+</span>
+
 <!-- form layouts -->
 <div class="sys-template field" sys:attach="template" template:for=".normalform div" template:datatype="ExoWeb.View.Adapter">
 	<div class='label' style="width:150px;">{binding label}</div>    

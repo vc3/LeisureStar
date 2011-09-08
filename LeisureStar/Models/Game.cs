@@ -14,6 +14,8 @@ namespace LeisureStar.Models
 
 		public virtual ICollection<Score> Scores { get; set; }
 
+		public virtual ICollection<Team> Teams { get; set; }
+
 		[Required]
 		public string Name { get; set; }
 
@@ -37,13 +39,19 @@ namespace LeisureStar.Models
 		{
 			get
 			{
-				var maxTeamScore = Scores.Where(ts => ts.Value == Scores.Max(scores => scores.Value));
-				if(maxTeamScore.Count() > 0)
+				int maxTeamScore = 0;
+				Team temp = null;
+
+				foreach (Team t in Teams)
 				{
-					return maxTeamScore.First().Team;
+					if (Scores.Where(s => s.Team == t && s.Game == this).Sum(s => s.Value) > maxTeamScore)
+					{
+						maxTeamScore = Scores.Where(s => s.Team == t && s.Game == this).Sum(s => s.Value);
+						temp = t;
+					}
 				}
-				else
-					return null;
+
+				return temp;
 			}
 		}
 

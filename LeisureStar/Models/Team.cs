@@ -14,6 +14,8 @@ namespace LeisureStar.Models
 
 		public virtual ICollection<Score> Scores { get; set; }
 
+		public virtual ICollection<Game> Games { get; set; }
+
 		[Required]
 		public string Name { get; set; }
 
@@ -33,6 +35,15 @@ namespace LeisureStar.Models
 				}
 
 				return tempCount;
+			}
+		}
+
+		[NotMapped]
+		public int TotalScore
+		{
+			get
+			{
+				return Scores.Sum(s => s.Value);
 			}
 		}
 

@@ -12,6 +12,8 @@ namespace LeisureStar.Models
 	{
 		public int PlayerId { get; set; }
 
+		public virtual ICollection<Score> Scores { get; set; }
+
 		public virtual ICollection<Team> Teams { get; set; }
 
 		[Required]
@@ -28,7 +30,16 @@ namespace LeisureStar.Models
 		public bool HasWon { get { return Wins > 0; } }
 
 		public int Wins { get; set; }
-		
+
+		[NotMapped]
+		public int TotalScore
+		{
+			get
+			{
+				return Scores.Sum(s => s.Value);
+			}
+		}
+
 		public static Player[] All
 		{
 			get

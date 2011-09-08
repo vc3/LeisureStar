@@ -41,6 +41,7 @@
 				<th>First Name</th>
 				<th>Last Name</th>
 				<th>Gender</th>
+				<th>Points Scored</th>
 				<th>Wins</th>
 				<th>&nbsp;</th>
 	</tr>
@@ -50,6 +51,7 @@
 				<td class="readonly" sys:attach="content" content:data="{@@ FirstName}"></td>
 				<td class="readonly" sys:attach="content" content:data="{@@ LastName}"></td>
 				<td class="readonly" sys:attach="content" content:data="{@@ Gender}"></td>
+				<td class="readonly" sys:attach="content" content:data="{@@ TotalScore}"></td>
 				<td class="readonly" sys:attach="content" content:data="{@@ Wins}"></td>
 				<td><a sys:href="{{ '@Url.Action("Edit", "Player")/' + $dataItem.meta.id }}">Edit</a></td>
 				<td><a href="#" class="button" sys:onclick="{{ 'deleteEntity(' + $dataItem.meta.id + ')' }}">Delete</a></td>

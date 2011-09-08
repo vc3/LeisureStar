@@ -22,5 +22,17 @@ namespace LeisureStar.Controllers
 			return View();
 		}
 
+		public ActionResult ViewResults(string id)
+		{
+			ViewData["Id"] = id;
+			return View();
+		}
+
+		public ActionResult Play(string id)
+		{
+			ViewData["Id"] = id;
+			return View();
+		}
+
 	}
 }

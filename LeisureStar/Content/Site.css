@@ -324,6 +324,9 @@ div#title {
 	width: 6em;
 }
 
+.label {
+	font-weight: bold;
+}
 .validation-some  { color:#990000; }
 .validation-none{ display: none; }
 
@@ -367,7 +370,7 @@ div#title {
   border-left-color: #5c87b2;
   left: 0.25em;
 }
-                    
+					
 .arrow-s {
   border-top-width: 1em;
   border-top-style: solid;

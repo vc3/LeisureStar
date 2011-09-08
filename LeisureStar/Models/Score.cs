@@ -16,6 +16,8 @@ namespace LeisureStar.Models
 
 		public virtual Team Team { get; set; }
 
+		public virtual Player Player { get; set; }
+
 		public int Value { get; set; }
 
 		public static Score[] All

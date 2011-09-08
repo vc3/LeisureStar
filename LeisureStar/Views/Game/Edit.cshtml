@@ -48,10 +48,9 @@
 <section>
 	<div class="sys-template" sys:attach="dataview" dataview:data="{~ model.game, source=window.context}">
 		<div class="fieldwithlabel"><span sys:attach="content" content:data="{@@ Name }"></span></div>
-		<div class="fieldwithlabel"><span sys:attach="content" content:data="{@@ Started }"></span></div>
-		<div class="fieldwithlabel"><span sys:attach="content" content:data="{@@ Finished }"></span></div>
-		<div class="fieldwithlabel"><span sys:attach="content" content:data="{@@ NumberOfTeamsPlaying }"></span></div>
-		<div class="fieldwithlabel"><span sys:attach="content" content:data="{@@ NumberOfPlayersPerTeam }"></span></div>
+		<div class="fieldwithlabel"><span sys:attach="content" content:data="{@@ Started, label=Start Date }"></span></div>
+		<div class="fieldwithlabel"><span sys:attach="content" content:data="{@@ NumberOfTeamsPlaying, label=Teams Involved }"></span></div>
+		<div class="fieldwithlabel"><span sys:attach="content" content:data="{@@ NumberOfPlayersPerTeam, label=Players per Team }"></span></div>
 		<p />
 
 	</div>
