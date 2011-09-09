@@ -10,6 +10,8 @@ namespace LeisureStar.Models
 {
 	public class Team
 	{
+		#region Properties
+		
 		public int TeamId { get; set; }
 
 		public virtual ICollection<Score> Scores { get; set; }
@@ -55,6 +57,10 @@ namespace LeisureStar.Models
 			}
 		}
 
+		#endregion
+
+		#region Methods
+
 		/// <summary>
 		/// Deletes an instance of the current Player
 		/// </summary>
@@ -63,5 +69,7 @@ namespace LeisureStar.Models
 			LeisureStarDataContext.Current.Teams.Remove(this);
 			LeisureStarDataContext.Current.SaveChanges();
 		}
+
+		#endregion
 	}
 }

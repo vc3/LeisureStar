@@ -10,10 +10,13 @@ namespace LeisureStar.Models
 {
 	public class Game
 	{
+		#region Properties
+
 		public int GameId { get; set; }
 
 		public virtual ICollection<Score> Scores { get; set; }
 
+		[ListLength("NumberOfTeamsPlaying", ExoRule.Validation.CompareOperator.Equal)]
 		public virtual ICollection<Team> Teams { get; set; }
 
 		[Required]
@@ -63,6 +66,9 @@ namespace LeisureStar.Models
 			}
 		}
 
+		#endregion
+
+		#region Methods
 		/// <summary>
 		/// Deletes an instance of the current Player
 		/// </summary>
@@ -71,5 +77,6 @@ namespace LeisureStar.Models
 			LeisureStarDataContext.Current.Games.Remove(this);
 			LeisureStarDataContext.Current.SaveChanges();
 		}
+		#endregion
 	}
 }

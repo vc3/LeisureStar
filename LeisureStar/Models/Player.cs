@@ -10,6 +10,8 @@ namespace LeisureStar.Models
 {
 	public class Player
 	{
+		#region Properties
+
 		public int PlayerId { get; set; }
 
 		public virtual ICollection<Score> Scores { get; set; }
@@ -40,6 +42,13 @@ namespace LeisureStar.Models
 			}
 		}
 
+		[NotMapped]
+		public string FullName
+		{
+			get;
+			private set;
+		}
+
 		public static Player[] All
 		{
 			get
@@ -47,6 +56,16 @@ namespace LeisureStar.Models
 				return LeisureStarDataContext.Current.Players.ToArray();
 			}
 		}
+		#endregion
+
+		#region Rules
+		static readonly Rule CalculateFullName = new Rule<Player>(
+			RuleInvocationType.PropertyGet,
+			player =>
+			{
+				player.FullName = player.FirstName + " " + player.LastName;
+			});
+		#endregion
 
 		/// <summary>
 		/// Deletes an instance of the current Player

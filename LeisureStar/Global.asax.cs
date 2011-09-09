@@ -174,6 +174,13 @@ namespace LeisureStar
 						   NumberOfTeamsPlaying = 2,
 						   NumberOfPlayersPerTeam = 2,
 						   Scores = new List<Score>()
+				},
+				new Game { Name = "Game5",
+						   Started = new DateTime(2011, 7, 1, 17, 0, 0),
+						   Finished = null,
+						   NumberOfTeamsPlaying = 2,
+						   NumberOfPlayersPerTeam = 2,
+						   Scores = new List<Score>()
 				}
 			};
 
@@ -281,7 +288,10 @@ namespace LeisureStar
 			teams[3].Scores.Add(scores[11]);
 			players[7].Scores.Add(scores[11]);
 
-	
+			//game 5 (uncompleted game)
+			games[4].Teams.Add(teams[0]);
+			games[4].Teams.Add(teams[1]);
+
 			games.ForEach(g => LeisureStarDataContext.Current.Games.Add(g));
 
 			try

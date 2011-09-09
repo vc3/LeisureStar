@@ -9,6 +9,7 @@
 						new { game = ExoWeb.Query<Game>(ViewData["Id"] != null ? ViewData["Id"].ToString() : null,
 													"this.Name",
 													"this.Scores",
+													"this.Teams",
 													"this.Started",
 													"this.Finished",
 													"this.NumberOfTeamsPlaying",
@@ -17,24 +18,6 @@
 					},
 					(Game game) =>{}
 			))
-	
-	<script>
-		$exoweb({
-			contextReady: function () {
-				$extend('Player', function (type) {
-					type.meta.addProperty({
-						name: 'FullName',
-						type: String
-					}).calculated({
-						fn: function () {
-							return $.trim((this._FirstName === null ? "" : this._FirstName) + (this._LastName === null ? "" : " " + this._LastName));
-						},
-						basedOn: ['this.FirstName', 'this.LastName']
-					});
-				});
-			}
-		});
-	</script>
 }
 
 <h2>Results</h2>

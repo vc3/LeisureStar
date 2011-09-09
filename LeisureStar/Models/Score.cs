@@ -10,6 +10,8 @@ namespace LeisureStar.Models
 {
 	public class Score
 	{
+		#region Properties
+		
 		public int ScoreId { get; set; }
 
 		public virtual Game Game { get; set; }
@@ -27,5 +29,7 @@ namespace LeisureStar.Models
 				return LeisureStarDataContext.Current.Scores.ToArray();
 			}
 		}
+
+		#endregion
 	}
 }

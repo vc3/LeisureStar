@@ -59,22 +59,6 @@
 			context.model.allteams.remove(team);
 			context.model.allteams.add(team);
 		}
-
-		$exoweb({
-			contextReady: function () {
-				$extend('Player', function (type) {
-					type.meta.addProperty({
-						name: 'FullName',
-						type: String
-					}).calculated({
-						fn: function () {
-							return $.trim((this._FirstName === null ? "" : this._FirstName) + (this._LastName === null ? "" : " " + this._LastName));
-						},
-						basedOn: ['this.FirstName', 'this.LastName']
-					});
-				});
-			}
-		});
 	</script>
 }
 
