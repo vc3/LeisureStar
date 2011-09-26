@@ -13,9 +13,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExoGraph", "..\ExoGraph\Exo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExoGraph.EntityFramework", "..\ExoGraph\ExoGraph.EntityFramework\ExoGraph.EntityFramework.csproj", "{48D45BC6-1815-4F09-BD2F-FC5011B7DBC2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExoRule", "..\ExoRules\ExoRules\ExoRule.csproj", "{B67D2642-A41A-42B2-8454-78ABA257008F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExoRule", "..\ExoRule\ExoRule\ExoRule.csproj", "{B67D2642-A41A-42B2-8454-78ABA257008F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExoRule.DataAnnotations", "..\ExoRules\ExoRule.DataAnnotations\ExoRule.DataAnnotations.csproj", "{790AF32B-245D-4CEE-B231-E7331C392324}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExoRule.DataAnnotations", "..\ExoRule\ExoRule.DataAnnotations\ExoRule.DataAnnotations.csproj", "{790AF32B-245D-4CEE-B231-E7331C392324}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExoWeb", "..\ExoWeb\ExoWeb\ExoWeb.csproj", "{4B14422C-751C-42AE-832A-B474A4AD0D95}"
 EndProject
@@ -47,12 +47,12 @@ Global
 		SccProjectUniqueName6 = ..\\ExoGraph\\ExoGraph.EntityFramework\\ExoGraph.EntityFramework.csproj
 		SccProjectName6 = ../ExoGraph/ExoGraph.EntityFramework
 		SccLocalPath6 = ..\\ExoGraph\\ExoGraph.EntityFramework
-		SccProjectUniqueName7 = ..\\ExoRules\\ExoRules\\ExoRule.csproj
-		SccProjectName7 = ../ExoRules/ExoRules
-		SccLocalPath7 = ..\\ExoRules\\ExoRules
-		SccProjectUniqueName8 = ..\\ExoRules\\ExoRule.DataAnnotations\\ExoRule.DataAnnotations.csproj
-		SccProjectName8 = ../ExoRules/ExoRule.DataAnnotations
-		SccLocalPath8 = ..\\ExoRules\\ExoRule.DataAnnotations
+		SccProjectUniqueName7 = ..\\ExoRule\\ExoRule\\ExoRule.csproj
+		SccProjectName7 = ../ExoRule/ExoRule
+		SccLocalPath7 = ..\\ExoRule\\ExoRule
+		SccProjectUniqueName8 = ..\\ExoRule\\ExoRule.DataAnnotations\\ExoRule.DataAnnotations.csproj
+		SccProjectName8 = ../ExoRule/ExoRule.DataAnnotations
+		SccLocalPath8 = ..\\ExoRule\\ExoRule.DataAnnotations
 		SccProjectUniqueName9 = ..\\ExoWeb\\ExoWeb\\ExoWeb.csproj
 		SccProjectName9 = ../ExoWeb/ExoWeb
 		SccLocalPath9 = ..\\ExoWeb\\ExoWeb

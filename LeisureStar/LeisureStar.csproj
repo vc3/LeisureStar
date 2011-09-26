@@ -175,11 +175,11 @@
       <Project>{F1D92AF4-9E97-4D29-8A24-B3C3011F2A42}</Project>
       <Name>ExoGraph</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\ExoRules\ExoRule.DataAnnotations\ExoRule.DataAnnotations.csproj">
+    <ProjectReference Include="..\..\ExoRule\ExoRule.DataAnnotations\ExoRule.DataAnnotations.csproj">
       <Project>{790AF32B-245D-4CEE-B231-E7331C392324}</Project>
       <Name>ExoRule.DataAnnotations</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\ExoRules\ExoRules\ExoRule.csproj">
+    <ProjectReference Include="..\..\ExoRule\ExoRule\ExoRule.csproj">
       <Project>{B67D2642-A41A-42B2-8454-78ABA257008F}</Project>
       <Name>ExoRule</Name>
     </ProjectReference>
