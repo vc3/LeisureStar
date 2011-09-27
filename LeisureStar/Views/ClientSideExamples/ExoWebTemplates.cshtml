@@ -1,5 +1,6 @@
 ﻿@{
-	ViewBag.Title = "Example 3";
+	ViewBag.Title = "ExoWeb Templates";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <script type="text/javascript">
@@ -47,7 +48,7 @@
 	});	
 </script>
 
-<h2>Example 3</h2>
+<h2>ExoWeb Templates</h2>
 <h3>Using MsAjax Method</h3>
 <div class="sys-template" sys:attach="dataview" dataview:data="{{ context.model.player }}">
 	<span>{binding FirstName }</span>

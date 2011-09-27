@@ -1,5 +1,6 @@
 ﻿@{
-	ViewBag.Title = "Example 2";
+	ViewBag.Title = "Client Model";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <script type="text/javascript">
@@ -35,19 +36,9 @@
 			}
 		}
 	});
-
-	Player.meta.addProperty({
-		name: 'FullName',
-		type: String
-	}).calculated({
-		fn: function () {
-			return this.get_FirstName() + " " + this.get_LastName();
-		},
-		basedOn: ['this.FirstName', 'this.LastName']
-	});
 </script>
 
-<h2>Example 2</h2>
+<h2>Client Model</h2>
 <div class="sys-template" sys:attach="dataview" dataview:data="{{ context.model.player }}">
 	<span>{binding FirstName }</span>
 	<span>{binding LastName }</span>
@@ -55,6 +46,4 @@
 	First: <input type="text" id="textFirstName" name="textFirstName" sys:value="{binding FirstName}" />
 	<br />
 	Last: <input type="text" id="textLastName" name="textLastName" sys:value="{binding LastName}" />
-	<br />
-	FullName: <input type="text" id="textFullName" name="textFullName" sys:value="{binding FullName}" />
 </div>

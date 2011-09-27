@@ -199,22 +199,19 @@
     <Content Include="Views\Team\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\ClientSideExamples\Example1.cshtml" />
+    <Content Include="Views\ClientSideExamples\ClientModel.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\ClientSideExamples\Example2.cshtml" />
+    <Content Include="Views\ClientSideExamples\CalculatedProperty.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\ClientSideExamples\Example3.cshtml" />
+    <Content Include="Views\ClientSideExamples\ExoWebTemplates.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\ClientSideExamples\Example4.cshtml" />
+    <Content Include="Views\ClientSideExamples\ExoWebConditions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\ClientSideExamples\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\ClientSideExamples\Templates.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Player\Index.cshtml" />

@@ -6,40 +6,34 @@ using System.Web.Mvc;
 
 namespace LeisureStar.Controllers
 {
-    public class ClientSideExamplesController : Controller
-    {
-        //
-        // GET: /ClientSideExamples/
+	public class ClientSideExamplesController : Controller
+	{
+		//
+		// GET: /ClientSideExamples/
 
 		public ActionResult Index()
 		{
 			return View();
 		}
 
-		public ActionResult Example1()
+		public ActionResult ClientModel()
 		{
 			return View();
 		}
 
-		public ActionResult Example2()
+		public ActionResult CalculatedProperty()
 		{
 			return View();
 		}
 
-		public ActionResult Example3()
+		public ActionResult ExoWebTemplates()
 		{
 			return View();
 		}
 
-		public ActionResult Example4()
+		public ActionResult ExoWebConditions()
 		{
 			return View();
 		}
-
-		public ActionResult Templates()
-		{
-			return View();
-		}
-
-    }
+	}
 }
