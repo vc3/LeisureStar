@@ -176,7 +176,7 @@ namespace LeisureStar
 						   Scores = new List<Score>()
 				},
 				new Game { Name = "Game5",
-						   Started = new DateTime(2011, 7, 1, 17, 0, 0),
+						   Started = null,
 						   Finished = null,
 						   NumberOfTeamsPlaying = 2,
 						   NumberOfPlayersPerTeam = 2,

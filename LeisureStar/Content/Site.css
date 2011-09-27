@@ -383,3 +383,57 @@ div#title {
   border-right-style: solid;
   border-right-color: #5c87b2;
   right: 0.25em;
+}
+
+.container1 {
+    width:100%;
+}
+.col1 {
+    float:left;
+    width:20%;
+}
+
+.teamname 
+{
+	font-weight: bold;
+	font-size:2em;	
+}
+
+.playgameplayername
+{
+	float: left;
+	margin-right: 1em;
+	width: 40%;
+}
+
+.playgamescore
+{
+	font-weight: bold;
+	font-size:1.5em;	
+}
+
+.playgameplayerscore
+{
+	float: left;
+	width: 30%;
+}
+
+.playgameteamscore
+{
+	padding-top: 0.3em;
+	clear: both;
+	font-size:3em;
+}
+
+.playgameaddscoreicon
+{
+	float: left;
+	cursor: pointer;
+	margin-right: 1em;
+	width: 20px;
+}
+
+.spacer
+{
+	clear: both;
+}

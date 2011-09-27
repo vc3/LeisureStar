@@ -10,19 +10,67 @@
 													"this.Name",
 													"this.Scores",
 													"this.Teams",
+													"this.Teams.Players",
+													"this.Teams.Scores",
+													"this.Teams.Players.Scores",
+													"this.Teams.Players.Teams",
 													"this.Started",
 													"this.Finished",
 													"this.NumberOfTeamsPlaying",
 													"this.NumberOfPlayersPerTeam",
-													"this.Winner").Include("Team.All").Include("Player.All")
+													"this.Winner")
 					},
 					(Game game) =>{}
 			))
+
+		<script type="text/javascript">
+			$exoweb({
+				contextReady: function () {
+					$extend('Player', function (type) {
+						type.meta.addProperty({
+							name: 'CurrentGameScoreTotal',
+							type: Number,
+							isList: false
+						})
+					.calculated({
+						fn: function () {
+							var activeGameScores = $transform(this.get_Scores()).where('Game.meta.id === context.model.game.meta.id');
+							var totalScore = 0;
+							activeGameScores.forEach(function (item, index) {
+								totalScore += item.get_Value();
+							});
+							return totalScore;
+						},
+						basedOn: ['this.Scores']
+					});
+					});
+
+					$extend('Team', function (type) {
+						type.meta.addProperty({
+							name: 'CurrentGameScoreTotal',
+							type: Number,
+							isList: false
+						})
+					.calculated({
+						fn: function () {
+							var activeGameScores = $transform(this.get_Scores()).where('Game.meta.id === context.model.game.meta.id');
+							var totalScore = 0;
+							activeGameScores.forEach(function (item, index) {
+								totalScore += item.get_Value();
+							});
+							return totalScore;
+						},
+						basedOn: ['this.Scores']
+					});
+					});
+				}
+			});
+	</script>
 }
 
 <h2>Results</h2>
 <section>
-	<div class="sys-template" sys:attach="dataview" dataview:data="{~ model.game, source=window.context}">
+	<div class="sys-template container1" sys:attach="dataview" dataview:data="{~ model.game, source=window.context}">
 		<div class="readonlywithlabel"><span sys:attach="content" content:data="{@@ Name }"></span></div>
 		<div class="readonlywithlabel"><span sys:attach="content" content:data="{@@ Started, label=Start Date }"></span></div>
 		<div class="readonlywithlabel"><span sys:attach="content" content:data="{@@ Finished, label=Finished Date }"></span></div>
@@ -30,22 +78,20 @@
 		<div class="readonlywithlabel"><span sys:attach="content" content:data="{@@ NumberOfPlayersPerTeam, label=Players per Team }"></span></div>
 		<p />
 
-		<span style="font-weight: bold;">Scores:</span>
-		<table class="grid readonly">
-			<thead>
-			<tr>
-				<th>Player</th>
-				<th>Team</th>
-				<th>Points</th>
-			</tr>
-			</thead>
-			<tbody class="sys-template" sys:attach="dataview" dataview:data="{~ Scores, transform=orderBy('Team.Name') }">
-			<tr sys:class="{{ $index % 2 == 0 ? 'even' : '' }}">
-						<td class="readonly" sys:attach="content" content:data="{@@ Player.FullName}"></td>
-						<td class="readonly" sys:attach="content" content:data="{@@ Team.Name}"></td>
-						<td class="readonly" sys:attach="content" content:data="{@@ Value}"></td>
-			</tr>
-		</table>
-	</div>
+		<div class="sys-template" sys:attach="dataview" dataview:data="{~ Teams }">
+			<div class="col1">
+				<div class="readonly"><span sys:attach="content" sys:class="teamname" content:data="{@@ Name }"></span></div>
+				<div class="sys-template" sys:attach="dataview" dataview:data="{~ Players }">
+					<div class="readonly playgameplayername"><span sys:attach="content" content:data="{@@ FullName }"></span></div>
+					<div class="playgameaddscoreicon"><div class="ui-state-default ui-corner-all "><span class="ui-icon ui-icon-circle-plus" onclick="addScore($parentContextData(this));"></span></div></div>
+					<div class="readonly playgamescore playgameplayerscore"><span sys:attach="content" content:data="{@@ CurrentGameScoreTotal }"></span></div>
+					<div class="spacer"></div>
+				</div>
 
+				<div class="readonly playgamescore playgameteamscore"><span sys:attach="content" content:data="{@@ CurrentGameScoreTotal }"></span></div>
+			</div>
+		</div>
+
+		<div class="spacer"></div>
+	</div>
 </section>

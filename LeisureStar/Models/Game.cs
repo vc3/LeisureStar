@@ -22,11 +22,10 @@ namespace LeisureStar.Models
 		[Required]
 		public string Name { get; set; }
 
-		[Required]
-		[DisplayFormat(DataFormatString = "ShortDate")]
+		[DisplayFormat(DataFormatString = "Time")]
 		public DateTime? Started { get; set; }
 
-		[DisplayFormat(DataFormatString = "ShortDate")]
+		[DisplayFormat(DataFormatString = "Time")]
 		public DateTime? Finished { get; set; }
 
 		[Required]
