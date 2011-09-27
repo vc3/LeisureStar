@@ -38,6 +38,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Afterthought, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Afterthought.1.1.1\lib\Afterthought.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.4.1.10331.0\lib\EntityFramework.dll</HintPath>
     </Reference>
@@ -228,6 +231,7 @@
   <ItemGroup>
     <Content Include="Views\Game\ViewResults.cshtml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -258,6 +262,7 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PostBuildEvent>"C:\Projects\Afterthought\Afterthought.Amender\bin\Debug\Afterthought.Amender.exe" "$(TargetPath)" "$(TargetDir)ExoGraph.EntityFramework.dll"</PostBuildEvent>
+    <PostBuildEvent>"$(SolutionDir)packages\Afterthought.1.1.1\tools\Afterthought.Amender.exe" "$(TargetPath)" "$(TargetDir)ExoGraph.EntityFramework.dll"
+</PostBuildEvent>
   </PropertyGroup>
 </Project>
