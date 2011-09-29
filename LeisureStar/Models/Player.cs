@@ -22,6 +22,7 @@ namespace LeisureStar.Models
 		public string FirstName { get; set; }
 
 		[Required]
+		[Compare("FirstName", ExoRule.Validation.CompareOperator.NotEqual)]
 		public string LastName { get; set; }
 
 		[Required]
