@@ -6,25 +6,32 @@
 <script type="text/javascript">
 	var testSignal = new ExoWeb.Signal("counter signals");
 
-	function addSignal() {
-		var test = testSignal.pending(function () {
-			/*var i = 0;
-			for (i = 0; i < 100000; i++) {
-			console.log(i);
-			}*/
-
-			console.log("blah pending callback running");
-		});
-
-		test();
+	function log(message) {
+		$("#log").val($("#log").val() + "\n" + message);
 	}
 
-	function runSignal() {
-		testSignal.waitForAll(function () { console.log("All Signals have run"); });
+	function counter(uniqueidentifier, callback) {
+		var timeToWait = Math.floor(Math.random() * 3000);
+		setTimeout(function () {
+			log(uniqueidentifier + " is done.");
+			callback(uniqueidentifier);
+		}, timeToWait);
+	}
+
+	function addSignal() {
+		var codes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+		codes.forEach(function (item, index) {
+			counter(item, testSignal.pending(function (code) { log("Signal pending callback running, code = " + code); }));
+		});
+
+		testSignal.waitForAll(function () {
+			log("All signals are complete");
+		});
 	}
 </script>
 
 <h2>Signals</h2>
 
-<a class="button" onclick="addSignal();">Add Signal to Queue</a> <br />
-<a class="button" onclick="runSignal();">Run Next Signal</a>
+<a class="button" onclick="addSignal();">Start Signal Code</a> <br />
+<textarea id="log" cols="50" rows="22"></textarea>
