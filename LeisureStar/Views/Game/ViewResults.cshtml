@@ -5,6 +5,50 @@
 
 @section startupScript 
 {
+	<script type="text/javascript">
+		$exoweb({
+			contextReady: function () {
+				$extend('Player', function (type) {
+					type.meta.addProperty({
+						name: 'CurrentGameScoreTotal',
+						type: Number,
+						isList: false
+					})
+				.calculated({
+					fn: function () {
+						var activeGameScores = $transform(this.get_Scores()).where('Game.meta.id === context.model.game.meta.id');
+						var totalScore = 0;
+						activeGameScores.forEach(function (item, index) {
+							totalScore += item.get_Value();
+						});
+						return totalScore;
+					},
+					basedOn: ['this.Scores']
+				});
+				});
+
+				$extend('Team', function (type) {
+					type.meta.addProperty({
+						name: 'CurrentGameScoreTotal',
+						type: Number,
+						isList: false
+					})
+				.calculated({
+					fn: function () {
+						var activeGameScores = $transform(this.get_Scores()).where('Game.meta.id === context.model.game.meta.id');
+						var totalScore = 0;
+						activeGameScores.forEach(function (item, index) {
+							totalScore += item.get_Value();
+						});
+						return totalScore;
+					},
+					basedOn: ['this.Scores']
+				});
+				});
+			}
+		});
+	</script>
+
 	@Html.Raw(ExoWeb.Model(
 						new { game = ExoWeb.Query<Game>(ViewData["Id"] != null ? ViewData["Id"].ToString() : null,
 													"this.Name",
@@ -22,50 +66,6 @@
 					},
 					(Game game) =>{}
 			))
-
-		<script type="text/javascript">
-			$exoweb({
-				contextReady: function () {
-					$extend('Player', function (type) {
-						type.meta.addProperty({
-							name: 'CurrentGameScoreTotal',
-							type: Number,
-							isList: false
-						})
-					.calculated({
-						fn: function () {
-							var activeGameScores = $transform(this.get_Scores()).where('Game.meta.id === context.model.game.meta.id');
-							var totalScore = 0;
-							activeGameScores.forEach(function (item, index) {
-								totalScore += item.get_Value();
-							});
-							return totalScore;
-						},
-						basedOn: ['this.Scores']
-					});
-					});
-
-					$extend('Team', function (type) {
-						type.meta.addProperty({
-							name: 'CurrentGameScoreTotal',
-							type: Number,
-							isList: false
-						})
-					.calculated({
-						fn: function () {
-							var activeGameScores = $transform(this.get_Scores()).where('Game.meta.id === context.model.game.meta.id');
-							var totalScore = 0;
-							activeGameScores.forEach(function (item, index) {
-								totalScore += item.get_Value();
-							});
-							return totalScore;
-						},
-						basedOn: ['this.Scores']
-					});
-					});
-				}
-			});
-	</script>
 }
 
 <h2>Results</h2>
@@ -83,7 +83,6 @@
 				<div class="readonly"><span sys:attach="content" sys:class="teamname" content:data="{@@ Name }"></span></div>
 				<div class="sys-template" sys:attach="dataview" dataview:data="{~ Players }">
 					<div class="readonly playgameplayername"><span sys:attach="content" content:data="{@@ FullName }"></span></div>
-					<div class="playgameaddscoreicon"><div class="ui-state-default ui-corner-all "><span class="ui-icon ui-icon-circle-plus" onclick="addScore($parentContextData(this));"></span></div></div>
 					<div class="readonly playgamescore playgameplayerscore"><span sys:attach="content" content:data="{@@ CurrentGameScoreTotal }"></span></div>
 					<div class="spacer"></div>
 				</div>

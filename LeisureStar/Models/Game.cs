@@ -67,6 +67,18 @@ namespace LeisureStar.Models
 
 		#endregion
 
+		#region Rules
+
+		static readonly Error NumberOfMembersPerTeam = "Every team must have the same number of players per team defined in the game";
+
+		static readonly Rule ValidateNumberOfMembersPerTeam = new Rule<Game>(
+			game => NumberOfMembersPerTeam.When(game, () => game.Teams.Any(t => t.Players.Count != game.NumberOfPlayersPerTeam), "Teams", "NumberOfPlayersPerTeam"))
+			.OnChangeOf("NumberOfPlayersPerTeam", "Teams")
+			.Asserts(NumberOfMembersPerTeam)
+			.RunOnServerAndClient();
+
+		#endregion
+
 		#region Methods
 		/// <summary>
 		/// Deletes an instance of the current Player

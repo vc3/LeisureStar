@@ -35,5 +35,15 @@ namespace LeisureStar.Controllers
 		{
 			return View();
 		}
+
+		public ActionResult FormatFunction()
+		{
+			return View();
+		}
+
+		public ActionResult Signals()
+		{
+			return View();
+		}
 	}
 }

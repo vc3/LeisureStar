@@ -83,6 +83,45 @@
 						basedOn: ['this.Scores']
 					});
 				});
+
+				$extend('Game', function (type) {
+					type.meta.addProperty({
+						name: 'Winner',
+						type: Team
+					})
+					.calculated({
+						fn: function () {
+							var maxScore = 0;
+							var winner = null;
+
+							this.get_Teams().forEach(function (item, index) {
+								if (item.get_CurrentGameScoreTotal() > maxScore) {
+									maxScore = item.get_CurrentGameScoreTotal();
+									winner = item;
+								}
+							});
+
+							return winner;
+						},
+						basedOn: ['this.Teams.Scores']
+					});
+				});
+
+				//this is a timing issue, if this is grouped with the other Team
+				//extension then it will run before the Winner property is calculated
+				//on Game
+				$extend('Team', function (type) {
+					type.meta.addProperty({
+						name: 'IsWinner',
+						type: Boolean
+					})
+					.calculated({
+						fn: function () {
+							return this === context.model.game.get_Winner();
+						},
+						basedOn: ['this.Games.Teams.Scores']
+					});
+				});
 			}
 		});
 	</script>
@@ -94,6 +133,7 @@
 													"this.Teams",
 													"this.Teams.Players",
 													"this.Teams.Scores",
+													"this.Teams.Games",
 													"this.Teams.Players.Scores",
 													"this.Teams.Players.Teams",
 													"this.Started",
@@ -120,6 +160,9 @@
 				</div>
 
 				<div class="readonly playgamescore playgameteamscore"><span sys:attach="content" content:data="{@@ CurrentGameScoreTotal }"></span></div>
+				<div sys:attach="toggle" toggle:on="{binding IsWinner }" toggle:when="{{ false }}" toggle:action="hide">
+					<div class="playgamescore playgameteamscore">Winning!</div>
+				</div>
 			</div>
 		</div>
 
