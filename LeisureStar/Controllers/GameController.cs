@@ -4,34 +4,38 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using LeisureStar.Models;
+using ExoGraph;
 
 namespace LeisureStar.Controllers
 {
 	public class GameController : Controller
 	{
-		//
-		// GET: /Game/
+		/// <summary>
+		/// /Game
+		/// </summary>
+		/// <returns></returns>
 		public ActionResult Index()
 		{
-			return View();
+			ViewBag.Title = "Games";
+			return View(Game.All);
 		}
 
 		public ActionResult Edit(string id)
 		{
-			ViewData["Id"] = id;
-			return View();
+			ViewBag.Title = "Edit Game";
+			return View(GraphContext.Create<Game>(id));
 		}
 
 		public ActionResult ViewResults(string id)
 		{
-			ViewData["Id"] = id;
-			return View();
+			ViewBag.Title = "Game Results";
+			return View(GraphContext.Create<Game>(id));
 		}
 
 		public ActionResult Play(string id)
 		{
-			ViewData["Id"] = id;
-			return View();
+			ViewBag.Title = "Play Game";
+			return View(GraphContext.Create<Game>(id));
 		}
 
 	}

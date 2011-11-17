@@ -10,18 +10,25 @@ namespace LeisureStar.Controllers
 {
 	public class PlayerController : Controller
 	{
-		//
-		// GET: /Player/
-
+		/// <summary>
+		/// /Player
+		/// </summary>
+		/// <returns></returns>
 		public ActionResult Index()
 		{
-			return View();
+			ViewBag.Title = "Players";
+			return View(Player.All);
 		}
 
+		/// <summary>
+		/// /Player/Edit/#
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
 		public ActionResult Edit(string id)
 		{
-			ViewData["Id"] = id;
-			return View();
+			ViewBag.Title = "Edit Player";
+			return View(GraphContext.Create<Player>(id));
 		}
 	}
 }

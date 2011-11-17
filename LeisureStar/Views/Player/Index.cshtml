@@ -1,65 +1,63 @@
-﻿@{
-	ViewBag.Title = "List Players";
-	Layout = "~/Views/Shared/_Layout.cshtml";
-}
+﻿@model IEnumerable<Player>
 
-@section startupScript
+@ExoWeb.LoadTemplates("~/Scripts/ExoWeb/exoweb-templates.htm")
+
+@ExoWeb.Model(new
 {
-	@Html.Raw(ExoWeb.Model(new {
-		players = Player.All
-	}))
+	players = Player.All
+})
 
-	<script type="text/javascript">
-		function showMessage(message) {
-			var messageBox = $('.message');
-			messageBox.children('span').text(message);
-			messageBox.fadeIn();
-		}
+@ExoWeb.Render(
+	@<section>
+		<table class="grid readonly">
+			<thead>
+				<tr>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Gender</th>
+					<th>Points Scored</th>
+					<th>Wins</th>
+					<th>&nbsp;</th>
+					<th>&nbsp;</th>
+				</tr>
+			</thead>
+			<tbody class="sys-template" sys:attach="dataview" dataview:data="{~ model.players,source=window.context}">
+				<tr sys:class="{{ $index % 2 == 0 ? 'even' : '' }}">
+					<td>{# FirstName}</td>
+					<td>{# LastName}</td>
+					<td>{# Gender}</td>
+					<td>{# TotalScore}</td>
+					<td>{# Wins}</td>
+					<td><a sys:href="{{ '@Url.Action("Edit", "Player")/' + $dataItem.meta.id }}">Edit</a></td>
+					<td><a href="#" class="button" sys:onclick="{{ 'deleteEntity(' + $dataItem.meta.id + ')' }}">Delete</a></td>
+				</tr>
+			</tbody>
+		</table>
+		<a href="@Url.Action("Edit", "Player")" class="button">Add</a>
+		<div class="message">
+			<span style="font-weight: bold;"></span>
+		</div>
+	</section>
+)
 
-		function deleteEntity(entityId) {
-			var entity = null;
-			context.model.players.forEach(function (player, i) {
-				if (player.meta.id == entityId) {
-					entity = player;
-				}
-			});
+<script type="text/javascript">
+	function showMessage(message) {
+		var messageBox = $('.message');
+		messageBox.children('span').text(message);
+		messageBox.fadeIn();
+	}
 
-			if (entity != null) {
-				context.model.players.remove(entity);
-				entity.DeleteInstance();
+	function deleteEntity(entityId) {
+		var entity = null;
+		context.model.players.forEach(function (player, i) {
+			if (player.meta.id == entityId) {
+				entity = player;
 			}
+		});
+
+		if (entity != null) {
+			context.model.players.remove(entity);
+			entity.DeleteInstance();
 		}
-	</script>
-}
-
-<h2>Players</h2>
-
-<section>
-	<table class="grid readonly">
-	<thead>
-	<tr>
-				<th>First Name</th>
-				<th>Last Name</th>
-				<th>Gender</th>
-				<th>Points Scored</th>
-				<th>Wins</th>
-				<th>&nbsp;</th>
-	</tr>
-	</thead>
-	<tbody class="sys-template" sys:attach="dataview" dataview:data="{~ model.players,source=window.context}">
-	<tr sys:class="{{ $index % 2 == 0 ? 'even' : '' }}">
-				<td class="readonly" sys:attach="content" content:data="{@@ FirstName}"></td>
-				<td class="readonly" sys:attach="content" content:data="{@@ LastName}"></td>
-				<td class="readonly" sys:attach="content" content:data="{@@ Gender}"></td>
-				<td class="readonly" sys:attach="content" content:data="{@@ TotalScore}"></td>
-				<td class="readonly" sys:attach="content" content:data="{@@ Wins}"></td>
-				<td><a sys:href="{{ '@Url.Action("Edit", "Player")/' + $dataItem.meta.id }}">Edit</a></td>
-				<td><a href="#" class="button" sys:onclick="{{ 'deleteEntity(' + $dataItem.meta.id + ')' }}">Delete</a></td>
-	</tr>
-	</table>
-</section>
-<a href="@Url.Action("Edit", "Player")" class="button">Add</a>
-
-<div class="message">
-<span style="font-weight: bold;"></span>
-</div>
+	}
+</script>

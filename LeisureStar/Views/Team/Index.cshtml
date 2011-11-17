@@ -1,59 +1,56 @@
-﻿@{
-	ViewBag.Title = "List Teams";
-	Layout = "~/Views/Shared/_Layout.cshtml";
-}
+﻿@model IEnumerable<Team>
+		   
+@ExoWeb.LoadTemplates("~/Scripts/ExoWeb/exoweb-templates.htm")
 
-@section startupScript
+@ExoWeb.Model(new
 {
-	@Html.Raw(ExoWeb.Model(new {
-		teams = Team.All
-	}))
+	teams = Team.All
+})
 
-	<script type="text/javascript">
-		function showMessage(message) {
-			var messageBox = $('.message');
-			messageBox.children('span').text(message);
-			messageBox.fadeIn();
-		}
+@ExoWeb.Render(
+	@<section>
+		<table class="grid readonly">
+			<thead>
+				<tr>
+					<th>Team</th>
+					<th>Wins</th>
+					<th>&nbsp;</th>
+				</tr>
+			</thead>
+			<tbody class="sys-template" sys:attach="dataview" dataview:data="{~ model.teams,source=window.context}">
+				<tr sys:class="{{ $index % 2 == 0 ? 'even' : '' }}">
+					<td>{# Name}</td>
+					<td>{# Wins}</td>
+					<td><a sys:href="{{ '@Url.Action("Edit", "Team")/' + $dataItem.meta.id }}">Edit</a></td>
+					<td><a href="#" class="button" sys:onclick="{{ 'deleteEntity(' + $dataItem.meta.id + ')' }}">Delete</a></td>
+				</tr>
+			</tbody>
+		</table>
+		<a href="@Url.Action("Edit", "Team")" class="button">Add</a>
+		<div class="message">
+			<span style="font-weight: bold;"></span>
+		</div>
+	</section>
+)
 
-		function deleteEntity(entityId) {
-			var entity = null;
-			context.model.teams.forEach(function (team, i) {
-				if (team.meta.id == entityId) {
-					entity = team;
-				}
-			});
+<script type="text/javascript">
+	function showMessage(message) {
+		var messageBox = $('.message');
+		messageBox.children('span').text(message);
+		messageBox.fadeIn();
+	}
 
-			if (entity != null) {
-				context.model.teams.remove(entity);
-				entity.DeleteInstance();
+	function deleteEntity(entityId) {
+		var entity = null;
+		context.model.teams.forEach(function (team, i) {
+			if (team.meta.id == entityId) {
+				entity = team;
 			}
+		});
+
+		if (entity != null) {
+			context.model.teams.remove(entity);
+			entity.DeleteInstance();
 		}
-	</script>
-}
-
-<h2>Teams</h2>
-
-<section>
-	<table class="grid readonly">
-	<thead>
-	<tr>
-				<th>Team</th>
-				<th>Wins</th>
-				<th>&nbsp;</th>
-	</tr>
-	</thead>
-	<tbody class="sys-template" sys:attach="dataview" dataview:data="{~ model.teams,source=window.context}">
-	<tr sys:class="{{ $index % 2 == 0 ? 'even' : '' }}">
-				<td class="readonly" sys:attach="content" content:data="{@@ Name}"></td>
-				<td class="readonly" sys:attach="content" content:data="{@@ Wins}"></td>
-				<td><a sys:href="{{ '@Url.Action("Edit", "Team")/' + $dataItem.meta.id }}">Edit</a></td>
-				<td><a href="#" class="button" sys:onclick="{{ 'deleteEntity(' + $dataItem.meta.id + ')' }}">Delete</a></td>
-	</tr>
-	</table>
-</section>
-<a href="@Url.Action("Edit", "Team")" class="button">Add</a>
-
-<div class="message">
-<span style="font-weight: bold;"></span>
-</div>
+	}
+</script>

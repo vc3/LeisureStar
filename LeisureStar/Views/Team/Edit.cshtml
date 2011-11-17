@@ -1,93 +1,82 @@
-﻿@{
-	ViewBag.Title = "Edit Team";
-	Layout = "~/Views/Shared/_Layout.cshtml";
-}
+﻿@model Team
 
-@section startupScript 
+@ExoWeb.LoadTemplates("~/Scripts/ExoWeb/exoweb-templates.htm")
+
+@ExoWeb.Model(new 
 {
-	@Html.Raw(ExoWeb.Model(
-					new { team = ExoWeb.Query<Team>(ViewData["Id"] != null ? ViewData["Id"].ToString() : null,
-													"this.Name",
-													"this.Wins",
-													"this.Players"),
+	team = Model.Include("this.Players"),
+	allplayers = Player.All
+})
 
-					  allplayers = Player.All
-					},
-					(Team team) =>{}
-			))
-
-		<script type="text/javascript">
-			function showMessage(message) {
-				var messageBox = $('.message');
-				messageBox.children('span').text(message);
-				messageBox.fadeIn();
-			}
-
-			function save() {
-				if ($('.validated-some').length > 0) {
-					showMessage('There are unresolved validation errors. Please correct and try again.');
-				}
-				else {
-					context.server.save(
-					context.model.team,
-					function success() {
-						document.location.href = '@Url.Action("Index", "Team")';
-					},
-					function fail() {
-						showMessage('An error occurred while saving.');
-					});
-				}
-			}
-
-			function addPlayer(player) {
-				if (!context.model.team.get_Players().contains(player)) {
-					context.model.team.get_Players().add(player);
-
-					//to get the allPlayers portion of the page to re-render
-					//remove the element and readd it
-					context.model.allplayers.remove(player);
-					context.model.allplayers.add(player);
-				}
-			}
-
-			function removePlayer(player) {
-				context.model.team.get_Players().remove(player);
-
-				//to get the allPlayers portion of the page to re-render
-				//remove the element and readd it
-				context.model.allplayers.remove(player);
-				context.model.allplayers.add(player);
-			}
-	</script>
-}
-
-<h2>Edit Team</h2>
-<section>
-	<div class="sys-template" sys:attach="dataview" dataview:data="{~ model.team, source=window.context}">
-		<div class="fieldwithlabel"><span sys:attach="content" content:data="{@@ Name }"></span></div>
-		<p />
-
-		<div sys:attach="toggle" toggle:on="{~ Players }" toggle:when="{{ function(item){ return item.length > 0; } }}" toggle:action="show">
-			<span style="font-weight: bold;">Current Players:</span>
-			<div class="sys-template" sys:attach="dataview" dataview:data="{~ Players, transform=orderBy('LastName') }">
-				<span class="arrow-s" style="font-size:1em;" onclick="removePlayer($parentContextData(this));"></span>
-				<div class="readonly" sys:style="display: inline;"><span sys:attach="content" content:data="{@@ FullName }"></span></div>
-				<br />
+@ExoWeb.Render(
+	@<section>
+		<div class="sys-template" sys:attach="dataview" dataview:data="{~ model.team, source=window.context}">
+			<div sys:attach="content" content:template="form" content:data="{@@ Name }"></div>
+			<p />
+			<div sys:attach="toggle" toggle:on="{~ Players }" toggle:when="{{ function(item){ return item.length > 0; } }}" toggle:action="show">
+				<span style="font-weight: bold;">Current Players:</span>
+				<div class="sys-template" sys:attach="dataview" dataview:data="{~ Players, transform=orderBy('LastName') }">
+					<span class="arrow-s" style="font-size:1em;" onclick="removePlayer($parentContextData(this));"></span>
+					<div class="readonly" style="display: inline;">{# FullName }</div>
+					<br />
+				</div>
 			</div>
 		</div>
-	</div>
+		<p />
+		<span style="font-weight: bold;">Available Players:</span>
+		<div class="sys-template allTeams" sys:attach="dataview" dataview:data="{~ model.allplayers, source=window.context, transform=where(function(item){ return !context.model.team.get_Players().contains(item);  }) }">
+			<span class="arrow-n" style="font-size:1em; margin-top:-0.4em;" onclick="addPlayer($parentContextData(this));"></span>
+			<div class="readonly" style="display: inline;">{# FullName }</div>
+			<br />
+		</div>
+		<p />
+		<div class="message">
+		<span style="font-weight: bold;"></span>
+		</div>
+		<a href="#" class="button" onclick="save()">Save</a>
+	</section>
+)
 
-	<p />
-	<span style="font-weight: bold;">Available Players:</span>
-	<div class="sys-template allTeams" sys:attach="dataview" dataview:data="{~ model.allplayers, source=window.context, transform=where(function(item){ return !context.model.team.get_Players().contains(item);  }) }">
-		<span class="arrow-n" style="font-size:1em; margin-top:-0.4em;" onclick="addPlayer($parentContextData(this));"></span>
-		<div class="readonly" sys:style="display: inline;"><span sys:attach="content" content:data="{@@ FullName }"></span></div>
-		<br />
-	</div>
-</section>
+<script type="text/javascript">
+	function showMessage(message) {
+		var messageBox = $('.message');
+		messageBox.children('span').text(message);
+		messageBox.fadeIn();
+	}
 
-<p />
-<div class="message">
-<span style="font-weight: bold;"></span>
-</div>
-<a href="#" class="button" onclick="save()">Save</a>
+	function save() {
+		if ($('.validated-some').length > 0) {
+			showMessage('There are unresolved validation errors. Please correct and try again.');
+		}
+		else {
+			context.server.save(
+			context.model.team,
+			function success() {
+				document.location.href = '@Url.Action("Index", "Team")';
+			},
+			function fail() {
+				showMessage('An error occurred while saving.');
+			});
+		}
+	}
+
+	function addPlayer(player) {
+		if (!context.model.team.get_Players().contains(player)) {
+			context.model.team.get_Players().add(player);
+
+			//to get the allPlayers portion of the page to re-render
+			//remove the element and readd it
+			context.model.allplayers.remove(player);
+			context.model.allplayers.add(player);
+		}
+	}
+
+	function removePlayer(player) {
+		context.model.team.get_Players().remove(player);
+
+		//to get the allPlayers portion of the page to re-render
+		//remove the element and readd it
+		context.model.allplayers.remove(player);
+		context.model.allplayers.add(player);
+	}
+</script>

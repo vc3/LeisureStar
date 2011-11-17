@@ -10,6 +10,8 @@ namespace LeisureStar.Models
 {
 	public class Gender
 	{
+		#region Properties
+
 		public int GenderId { get; set; }
 
 		[Required]
@@ -17,7 +19,7 @@ namespace LeisureStar.Models
 
 		public virtual ICollection<Player> Players { get; set; }
 
-		public static Gender[] All
+		public static ICollection<Gender> All
 		{
 			get
 			{
@@ -25,6 +27,6 @@ namespace LeisureStar.Models
 			}
 		}
 
-
+		#endregion
 	}
 }

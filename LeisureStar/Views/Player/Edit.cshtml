@@ -1,35 +1,59 @@
-﻿@{
-	ViewBag.Title = "Edit Player";
-	Layout = "~/Views/Shared/_Layout.cshtml";
-}
+﻿@model Player
 
-@section startupScript 
+@ExoWeb.LoadTemplates("~/Scripts/ExoWeb/exoweb-templates.htm")
+
+@ExoWeb.Model(new 
 {
-	@Html.Raw(ExoWeb.Model(
-						new { player = ExoWeb.Query<Player>(ViewData["Id"] != null ? ViewData["Id"].ToString() : null,
-													"this.FirstName",
-													"this.LastName",
-													"this.Gender",
-													"this.Wins",
-													"this.Teams").Include("Gender.All"),							
-						allteams = Team.All
-					},
-					(Player player) =>{}
-			))
+	player = Model.Include("this{Gender,Teams}","Gender.All"),				
+	allteams = Team.All
+})
 
-	<script type="text/javascript">
-		function showMessage(message) {
-			var messageBox = $('.message');
-			messageBox.children('span').text(message);
-			messageBox.fadeIn();
+@ExoWeb.Render(
+	@<section>
+		<div class="sys-template" sys:attach="dataview" dataview:data="{~ model.player, source=window.context}">
+			<div sys:attach="content" content:template="form" content:data="{@@ FirstName }"></div>
+			<div sys:attach="content" content:template="form" content:data="{@@ LastName }"></div>
+			<div sys:attach="content" content:template="form" content:data="{@@ Gender }"></div>
+			<p />
+			<div sys:attach="toggle" toggle:on="{~ Teams }" toggle:when="{{ function(item){ return item.length > 0; } }}" toggle:action="show">
+				<span style="font-weight: bold;">Current Teams:</span>
+				<div class="sys-template" sys:attach="dataview" dataview:data="{~ Teams }">
+					<span class="arrow-s" style="font-size:1em;" onclick="removeTeam($parentContextData(this));"></span>
+					<div class="readonly" style="display: inline;">{# Name }</div>
+					<br />
+				</div>
+			</div>
+		</div>
+
+		<p />
+		<span style="font-weight: bold;">Available Teams:</span>
+		<div class="sys-template allTeams" sys:attach="dataview" dataview:data="{~ model.allteams, source=window.context, transform=where(function(item){ return !context.model.player.get_Teams().contains(item);  }) }">
+			<span class="arrow-n" style="font-size:1em; margin-top:-0.4em;" onclick="addTeam($parentContextData(this));"></span>
+			<div class="readonly" style="display: inline;">{# Name }</div>
+			<br />
+		</div>
+		<p />
+		<div class="message">
+		<span style="font-weight: bold;"></span>
+		</div>
+		<p />
+		<a href="#" class="button" onclick="save()">Save</a>
+	</section>
+)
+
+<script type="text/javascript">
+	function showMessage(message) {
+		var messageBox = $('.message');
+		messageBox.children('span').text(message);
+		messageBox.fadeIn();
+	}
+
+	function save() {
+		if ($('.validated-some').length > 0) {
+			showMessage('There are unresolved validation errors. Please correct and try again.');
 		}
-
-		function save() {
-			if ($('.validated-some').length > 0) {
-				showMessage('There are unresolved validation errors. Please correct and try again.');
-			}
-			else {
-				context.server.save(
+		else {
+			context.server.save(
 				context.model.player,
 				function success() {
 					document.location.href = '@Url.Action("Index", "Player")';
@@ -37,61 +61,26 @@
 				function fail() {
 					showMessage('An error occurred while saving.');
 				});
-			}
 		}
+	}
 
-		function addTeam(team) {
-			if (!context.model.player.get_Teams().contains(team)) {
-				context.model.player.get_Teams().add(team);
+	function addTeam(team) {
+		if (!context.model.player.get_Teams().contains(team)) {
+			context.model.player.get_Teams().add(team);
 
-				//to get the allteams portion of the page to re-render
-				//remove the element and readd it
-				context.model.allteams.remove(team);
-				context.model.allteams.add(team);
-			}
-		}
-
-		function removeTeam(team) {
-			context.model.player.get_Teams().remove(team);
-			
 			//to get the allteams portion of the page to re-render
 			//remove the element and readd it
 			context.model.allteams.remove(team);
 			context.model.allteams.add(team);
 		}
-	</script>
-}
+	}
 
-<h2>Edit Player</h2>
-<section>
-	<div class="sys-template" sys:attach="dataview" dataview:data="{~ model.player, source=window.context}">
-		<div class="fieldwithlabel"><span sys:attach="content" content:data="{@@ FirstName }"></span></div>
-		<div class="fieldwithlabel"><span sys:attach="content" content:data="{@@ LastName }"></span></div>
-		<div class="fieldwithlabel"><span sys:attach="content" content:data="{@@ Gender }"></span></div>
-		<p />
+	function removeTeam(team) {
+		context.model.player.get_Teams().remove(team);
 
-		<div sys:attach="toggle" toggle:on="{~ Teams }" toggle:when="{{ function(item){ return item.length > 0; } }}" toggle:action="show">
-			<span style="font-weight: bold;">Current Teams:</span>
-			<div class="sys-template" sys:attach="dataview" dataview:data="{~ Teams }">
-				<span class="arrow-s" style="font-size:1em;" onclick="removeTeam($parentContextData(this));"></span>
-				<div class="readonly" sys:style="display: inline;"><span sys:attach="content" content:data="{@@ Name }"></span></div>
-				<br />
-			</div>
-		</div>
-	</div>
-
-	<p />
-	<span style="font-weight: bold;">Available Teams:</span>
-	<div class="sys-template allTeams" sys:attach="dataview" dataview:data="{~ model.allteams, source=window.context, transform=where(function(item){ return !context.model.player.get_Teams().contains(item);  }) }">
-		<span class="arrow-n" style="font-size:1em; margin-top:-0.4em;" onclick="addTeam($parentContextData(this));"></span>
-		<div class="readonly" sys:style="display: inline;"><span sys:attach="content" content:data="{@@ Name }"></span></div>
-		<br />
-	</div>
-</section>
-
-<p />
-<div class="message">
-<span style="font-weight: bold;"></span>
-</div>
-<p />
-<a href="#" class="button" onclick="save()">Save</a>
+		//to get the allteams portion of the page to re-render
+		//remove the element and readd it
+		context.model.allteams.remove(team);
+		context.model.allteams.add(team);
+	}
+</script>

@@ -50,13 +50,27 @@ namespace LeisureStar.Models
 			private set;
 		}
 
-		public static Player[] All
+		public static ICollection<Player> All
 		{
 			get
 			{
 				return LeisureStarDataContext.Current.Players.ToArray();
 			}
 		}
+
+		#endregion
+
+		#region Methods
+
+		/// <summary>
+		/// Deletes an instance of the current Player
+		/// </summary>
+		public void DeleteInstance()
+		{
+			LeisureStarDataContext.Current.Players.Remove(this);
+			LeisureStarDataContext.Current.SaveChanges();
+		}
+
 		#endregion
 
 		#region Rules
@@ -67,14 +81,5 @@ namespace LeisureStar.Models
 				player.FullName = player.FirstName + " " + player.LastName;
 			});
 		#endregion
-
-		/// <summary>
-		/// Deletes an instance of the current Player
-		/// </summary>
-		public void DeleteInstance()
-		{
-			LeisureStarDataContext.Current.Players.Remove(this);
-			LeisureStarDataContext.Current.SaveChanges();
-		}
 	}
 }

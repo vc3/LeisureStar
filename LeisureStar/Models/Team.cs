@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using ExoGraph;
 using ExoRule;
 using ExoRule.DataAnnotations;
+using System.Data.Entity;
 
 namespace LeisureStar.Models
 {
@@ -49,7 +50,7 @@ namespace LeisureStar.Models
 			}
 		}
 
-		public static Team[] All
+		public static ICollection<Team> All
 		{
 			get
 			{

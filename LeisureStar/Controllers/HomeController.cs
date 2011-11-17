@@ -11,7 +11,6 @@ namespace LeisureStar.Controllers
 		public ActionResult Index()
 		{
 			ViewBag.Message = "Welcome to LeisureStar!";
-
 			return View();
 		}
 	}

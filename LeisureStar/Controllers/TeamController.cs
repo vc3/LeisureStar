@@ -10,15 +10,25 @@ namespace LeisureStar.Controllers
 {
 	public class TeamController : Controller
 	{
+		/// <summary>
+		/// /Team
+		/// </summary>
+		/// <returns></returns>
 		public ActionResult Index()
 		{
-			return View();
+			ViewBag.Title = "Teams";
+			return View(Team.All);
 		}
 
+		/// <summary>
+		/// /Team/Edit/#
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
 		public ActionResult Edit(string id)
 		{
-			ViewData["Id"] = id;
-			return View();
+			ViewBag.Title = "Edit Team";
+			return View(GraphContext.Create<Team>(id));
 		}
 	}
 }

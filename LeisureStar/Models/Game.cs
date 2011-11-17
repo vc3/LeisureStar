@@ -57,25 +57,13 @@ namespace LeisureStar.Models
 			}
 		}
 
-		public static Game[] All
+		public static ICollection<Game> All
 		{
 			get
 			{
 				return LeisureStarDataContext.Current.Games.ToArray();
 			}
 		}
-
-		#endregion
-
-		#region Rules
-
-		static readonly Error NumberOfMembersPerTeam = "Every team must have the same number of players per team defined in the game";
-
-		static readonly Rule ValidateNumberOfMembersPerTeam = new Rule<Game>(
-			game => NumberOfMembersPerTeam.When(game, () => game.Teams.Any(t => t.Players.Count != game.NumberOfPlayersPerTeam), "Teams", "NumberOfPlayersPerTeam"))
-			.OnChangeOf("NumberOfPlayersPerTeam", "Teams")
-			.Asserts(NumberOfMembersPerTeam)
-			.RunOnServerAndClient();
 
 		#endregion
 
@@ -88,6 +76,18 @@ namespace LeisureStar.Models
 			LeisureStarDataContext.Current.Games.Remove(this);
 			LeisureStarDataContext.Current.SaveChanges();
 		}
+		#endregion
+	
+		#region Rules
+
+		static readonly Error NumberOfMembersPerTeam = "Every team must have the same number of players per team defined in the game";
+
+		static readonly Rule ValidateNumberOfMembersPerTeam = new Rule<Game>(
+			game => NumberOfMembersPerTeam.When(game, () => game.Teams.Any(t => t.Players.Count != game.NumberOfPlayersPerTeam), "Teams", "NumberOfPlayersPerTeam"))
+			.OnChangeOf("NumberOfPlayersPerTeam", "Teams")
+			.Asserts(NumberOfMembersPerTeam)
+			.RunOnServerAndClient();
+
 		#endregion
 	}
 }

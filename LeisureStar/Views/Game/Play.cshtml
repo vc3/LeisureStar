@@ -1,24 +1,55 @@
-﻿@{
-	ViewBag.Title = "Play Game";
-	Layout = "~/Views/Shared/_Layout.cshtml";
-}
+﻿@model Game
+		   
+@ExoWeb.LoadTemplates("~/Scripts/ExoWeb/exoweb-templates.htm")
 
-@section startupScript 
+@ExoWeb.Model(new 
 {
-	<script type="text/javascript">
-		function showMessage(message) {
-			var messageBox = $('.message');
-			messageBox.children('span').text(message);
-			messageBox.fadeIn();
-		}
+	game = Model.Include("this{Scores,Teams{Players{Scores,Teams},Scores,Games},Winner}")
+})
 
-		function save() {
-			if ($('.validated-some').length > 0) {
-				showMessage('There are unresolved validation errors. Please correct and try again.');
-			}
-			else {
-				context.model.game.set_Finished(new Date());
-				context.server.save(
+@ExoWeb.Render(
+	@<section>
+		<div class="sys-template container1" sys:attach="dataview" dataview:data="{~ model.game, source=window.context}">
+			<div class="sys-template" sys:attach="dataview" dataview:data="{~ Teams }">
+				<div class="col1">
+					<div class="teamname">{# Name }</div>
+					<div class="sys-template" sys:attach="dataview" dataview:data="{~ Players }">
+						<div class="playgameplayername">{# FullName }</div>
+						<div class="playgameaddscoreicon"><div class="ui-state-default ui-corner-all "><span class="ui-icon ui-icon-circle-plus" onclick="addScore($parentContextData(this));"></span></div></div>
+						<div class="playgamescore playgameplayerscore">{# CurrentGameScoreTotal }</div>
+						<div class="spacer"></div>
+					</div>
+
+					<div class="playgamescore playgameteamscore">{# CurrentGameScoreTotal }</div>
+					<div sys:attach="toggle" toggle:on="{binding IsWinner }" toggle:when="{{ false }}" toggle:action="hide">
+						<div class="playgamescore playgameteamscore">Winning!</div>
+					</div>
+				</div>
+			</div>
+			<div class="spacer"></div>
+		</div>
+		<p />
+		<div class="message">
+		<span style="font-weight: bold;"></span>
+		</div>
+		<a href="#" class="button" onclick="save()">End Game</a>
+	</section>
+)
+
+<script type="text/javascript">
+	function showMessage(message) {
+		var messageBox = $('.message');
+		messageBox.children('span').text(message);
+		messageBox.fadeIn();
+	}
+
+	function save() {
+		if ($('.validated-some').length > 0) {
+			showMessage('There are unresolved validation errors. Please correct and try again.');
+		}
+		else {
+			context.model.game.set_Finished(new Date());
+			context.server.save(
 					context.model.game,
 					function success() {
 						document.location.href = '@Url.Action("Index", "Game")';
@@ -26,32 +57,32 @@
 					function fail() {
 						showMessage('An error occurred while saving.');
 					});
-			}
 		}
+	}
 
-		function addScore(player) {
-			var team = context.model.game.get_Teams().intersect(player.get_Teams())[0];
-			var newScore = new Score();
-			newScore.set_Game(context.model.game);
-			newScore.set_Player(player);
-			newScore.set_Team(team);
-			newScore.set_Value(1);
+	function addScore(player) {
+		var team = context.model.game.get_Teams().intersect(player.get_Teams())[0];
+		var newScore = new Score();
+		newScore.set_Game(context.model.game);
+		newScore.set_Player(player);
+		newScore.set_Team(team);
+		newScore.set_Value(1);
 
-			player.get_Scores().add(newScore);
-			team.get_Scores().add(newScore);
-		}
+		player.get_Scores().add(newScore);
+		team.get_Scores().add(newScore);
+	}
 
-		$exoweb({
-			contextReady: function () {
-				//start the game by setting the start time
-				context.model.game.set_Started(new Date());
+	$exoweb({
+		contextReady: function () {
+			//start the game by setting the start time
+			context.model.game.set_Started(new Date());
 
-				$extend('Player', function (type) {
-					type.meta.addProperty({
-						name: 'CurrentGameScoreTotal',
-						type: Number,
-						isList: false
-					})
+			$extend('Player', function (type) {
+				type.meta.addProperty({
+					name: 'CurrentGameScoreTotal',
+					type: Number,
+					isList: false
+				})
 					.calculated({
 						fn: function () {
 							var activeGameScores = $transform(this.get_Scores()).where('Game.meta.id === context.model.game.meta.id');
@@ -63,14 +94,14 @@
 						},
 						basedOn: ['this.Scores']
 					});
-				});
+			});
 
-				$extend('Team', function (type) {
-					type.meta.addProperty({
-						name: 'CurrentGameScoreTotal',
-						type: Number,
-						isList: false
-					})
+			$extend('Team', function (type) {
+				type.meta.addProperty({
+					name: 'CurrentGameScoreTotal',
+					type: Number,
+					isList: false
+				})
 					.calculated({
 						fn: function () {
 							var activeGameScores = $transform(this.get_Scores()).where('Game.meta.id === context.model.game.meta.id');
@@ -82,13 +113,13 @@
 						},
 						basedOn: ['this.Scores']
 					});
-				});
+			});
 
-				$extend('Game', function (type) {
-					type.meta.addProperty({
-						name: 'Winner',
-						type: Team
-					})
+			$extend('Game', function (type) {
+				type.meta.addProperty({
+					name: 'Winner',
+					type: Team
+				})
 					.calculated({
 						fn: function () {
 							var maxScore = 0;
@@ -105,74 +136,24 @@
 						},
 						basedOn: ['this.Teams.Scores']
 					});
-				});
+			});
 
-				//this is a timing issue, if this is grouped with the other Team
-				//extension then it will run before the Winner property is calculated
-				//on Game
-				$extend('Team', function (type) {
-					type.meta.addProperty({
-						name: 'IsWinner',
-						type: Boolean
-					})
+			//this is a timing issue, if this is grouped with the other Team
+			//extension then it will run before the Winner property is calculated
+			//on Game
+			$extend('Team', function (type) {
+				type.meta.addProperty({
+					name: 'IsWinner',
+					type: Boolean
+				})
 					.calculated({
 						fn: function () {
 							return this === context.model.game.get_Winner();
 						},
 						basedOn: ['this.Games.Teams.Scores']
 					});
-				});
-			}
-		});
-	</script>
+			});
+		}
+	});
+</script>
 
-	@Html.Raw(ExoWeb.Model(
-						new { game = ExoWeb.Query<Game>(ViewData["Id"] != null ? ViewData["Id"].ToString() : null,
-													"this.Name",
-													"this.Scores",
-													"this.Teams",
-													"this.Teams.Players",
-													"this.Teams.Scores",
-													"this.Teams.Games",
-													"this.Teams.Players.Scores",
-													"this.Teams.Players.Teams",
-													"this.Started",
-													"this.Finished",
-													"this.NumberOfTeamsPlaying",
-													"this.NumberOfPlayersPerTeam",
-													"this.Winner")
-					},
-					(Game game) =>{}
-			))
-}
-
-<h2>Play Game</h2>
-<section>
-	<div class="sys-template container1" sys:attach="dataview" dataview:data="{~ model.game, source=window.context}">
-		<div class="sys-template" sys:attach="dataview" dataview:data="{~ Teams }">
-			<div class="col1">
-				<div class="readonly"><span sys:attach="content" sys:class="teamname" content:data="{@@ Name }"></span></div>
-				<div class="sys-template" sys:attach="dataview" dataview:data="{~ Players }">
-					<div class="readonly playgameplayername"><span sys:attach="content" content:data="{@@ FullName }"></span></div>
-					<div class="playgameaddscoreicon"><div class="ui-state-default ui-corner-all "><span class="ui-icon ui-icon-circle-plus" onclick="addScore($parentContextData(this));"></span></div></div>
-					<div class="readonly playgamescore playgameplayerscore"><span sys:attach="content" content:data="{@@ CurrentGameScoreTotal }"></span></div>
-					<div class="spacer"></div>
-				</div>
-
-				<div class="readonly playgamescore playgameteamscore"><span sys:attach="content" content:data="{@@ CurrentGameScoreTotal }"></span></div>
-				<div sys:attach="toggle" toggle:on="{binding IsWinner }" toggle:when="{{ false }}" toggle:action="hide">
-					<div class="playgamescore playgameteamscore">Winning!</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="spacer"></div>
-	</div>
-</section>
-
-<p />
-<div class="message">
-<span style="font-weight: bold;"></span>
-</div>
-
-<a href="#" class="button" onclick="save()">End Game</a>

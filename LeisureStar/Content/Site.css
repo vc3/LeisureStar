@@ -327,6 +327,12 @@ div#title {
 .label {
 	font-weight: bold;
 }
+
+div.form div.field
+{
+	margin-bottom: 10px;
+}
+
 .validation-some  { color:#990000; }
 .validation-none{ display: none; }
 
