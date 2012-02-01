@@ -4,13 +4,13 @@
 
 @ExoWeb.Model(new 
 {
-	player = Model.Include("this{Gender,Teams}","Gender.All"),				
+	player = Model.Include("this{Gender,Teams}","Gender.All"),
 	allteams = Team.All
 })
 
 @ExoWeb.Render(
 	@<section>
-		<div class="sys-template" sys:attach="dataview" dataview:data="{~ model.player, source=window.context}">
+		<div class="sys-template" sys:attach="dataview" dataview:data="{~ context.model.player, source=window}">
 			<div sys:attach="content" content:template="form" content:data="{@@ FirstName }"></div>
 			<div sys:attach="content" content:template="form" content:data="{@@ LastName }"></div>
 			<div sys:attach="content" content:template="form" content:data="{@@ Gender }"></div>
@@ -27,7 +27,7 @@
 
 		<p />
 		<span style="font-weight: bold;">Available Teams:</span>
-		<div class="sys-template allTeams" sys:attach="dataview" dataview:data="{~ model.allteams, source=window.context, transform=where(function(item){ return !context.model.player.get_Teams().contains(item);  }) }">
+		<div class="sys-template allTeams" sys:attach="dataview" dataview:data="{~ context.model.allteams, source=window, transform=where(function(item){ return context.model.player.get_Teams().indexOf(item) &lt; 0; }) }">
 			<span class="arrow-n" style="font-size:1em; margin-top:-0.4em;" onclick="addTeam($parentContextData(this));"></span>
 			<div class="readonly" style="display: inline;">{# Name }</div>
 			<br />

@@ -20,18 +20,21 @@ namespace LeisureStar.Controllers
 			return View(Game.All);
 		}
 
+		[AllowAnonymous]
 		public ActionResult Edit(string id)
 		{
 			ViewBag.Title = "Edit Game";
 			return View(GraphContext.Create<Game>(id));
 		}
 
+		[AllowAnonymous]
 		public ActionResult ViewResults(string id)
 		{
 			ViewBag.Title = "Game Results";
 			return View(GraphContext.Create<Game>(id));
 		}
 
+		[AllowAnonymous]
 		public ActionResult Play(string id)
 		{
 			ViewBag.Title = "Play Game";

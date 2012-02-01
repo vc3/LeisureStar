@@ -52,7 +52,7 @@
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
     <Reference Include="WatiN.Core">
-      <HintPath>..\..\..\VC3.Shared\Transitional\WatiN\2.1\bin\net35\WatiN.Core.dll</HintPath>
+      <HintPath>..\..\..\Shared\WatiN\2.1\bin\net20\WatiN.Core.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -71,13 +71,17 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\VC3.AutomatedTesting\VC3.AutomatedTesting.csproj">
+      <Project>{D5A5ACD6-F239-4FCA-A54B-861B6890A390}</Project>
+      <Name>VC3.AutomatedTesting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Shared\VC3\Source\VC3.csproj">
+      <Project>{E46486DB-7904-4C07-8B21-440E1BA8687D}</Project>
+      <Name>VC3</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Amnesia\Amnesia.csproj">
       <Project>{1A246932-199E-4DEE-8C7B-D5FBC3FF52C9}</Project>
       <Name>Amnesia</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\VC3.Shared\Transitional\VC3.AutomatedTesting\VC3.AutomatedTesting.csproj">
-      <Project>{D5A5ACD6-F239-4FCA-A54B-861B6890A390}</Project>
-      <Name>VC3.AutomatedTesting</Name>
     </ProjectReference>
     <ProjectReference Include="..\LeisureStar\LeisureStar.csproj">
       <Project>{FAF5AB55-1BF6-4DC6-B4BA-541E0BA952A6}</Project>

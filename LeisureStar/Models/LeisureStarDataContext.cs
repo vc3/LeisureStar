@@ -20,6 +20,7 @@ namespace LeisureStar.Models
 		public DbSet<Score> Scores { get; set; }
 		public DbSet<Game> Games { get; set; }
 		public DbSet<Gender> Genders { get; set; }
+		public DbSet<Account> Accounts { get; set; }
 		public static LeisureStarDataContext Current
 		{
 			get

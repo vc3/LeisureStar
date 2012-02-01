@@ -22,6 +22,7 @@ namespace LeisureStar
 		public static void RegisterGlobalFilters(GlobalFilterCollection filters)
 		{
 			filters.Add(new HandleErrorAttribute());
+			filters.Add(new LogonAuthorize());
 		}
 
 		public static void RegisterRoutes(RouteCollection routes)
@@ -39,6 +40,9 @@ namespace LeisureStar
 
 		protected void Application_Start()
 		{
+			// Disable server rendering
+			ExoWeb.ExoWeb.EnableServerRendering = false;
+
 			//System.Diagnostics.Debugger.Launch();
 			new GraphContextProvider().CreateContext += (source, args) =>
 			{
@@ -51,8 +55,6 @@ namespace LeisureStar
 
 			RegisterGlobalFilters(GlobalFilters.Filters);
 			RegisterRoutes(RouteTable.Routes);
-
-			ExoWeb.ExoWeb.Adapter = new ExoWeb.DataAnnotations.ServiceAdapter();
 
 			//Rebuild Database from the POCO's and seed the database with test data
 			//cannot use the normal method of seeding data by overriding the Seed method
@@ -76,6 +78,17 @@ namespace LeisureStar
 			genders.ForEach(g => LeisureStarDataContext.Current.Genders.Add(g));
 			LeisureStarDataContext.Current.SaveChanges();
 
+			List<Account> accounts = new List<Account>
+			{
+				new Account { UserName = "laforcek", Password = Encryption.Encrypt("password")
+				},
+				new Account { UserName = "matthewb", Password = Encryption.Encrypt("password")
+				}
+			};
+
+			accounts.ForEach(a => LeisureStarDataContext.Current.Accounts.Add(a));
+			LeisureStarDataContext.Current.SaveChanges();
+
 			List<Team> teams = new List<Team>
 			{
 				new Team { Name="Team 1",
@@ -95,9 +108,7 @@ namespace LeisureStar
 			//create list of players
 			List<Player> players = new List<Player>
 			{
-				new Player { FirstName = "Babe",
-							 LastName = "Ruth",
-							 Teams = new List<Team>() },
+				new Player { FirstName = "Babe", LastName = "Ruth", Teams = new List<Team>(), Wins = 2 },
 				new Player { FirstName = "Jackie",
 							 LastName = "Robinson",
 							 Teams = new List<Team>() },
@@ -176,6 +187,13 @@ namespace LeisureStar
 						   Scores = new List<Score>()
 				},
 				new Game { Name = "Game5",
+						   Started = new DateTime(2011, 12, 7, 9, 30, 0),
+						   Finished = new DateTime(2011, 12, 7, 9, 45, 0),
+						   NumberOfTeamsPlaying = 2,
+						   NumberOfPlayersPerTeam = 2,
+						   Scores = new List<Score>()
+				},
+				new Game { Name = "Game6",
 						   Started = null,
 						   Finished = null,
 						   NumberOfTeamsPlaying = 2,
@@ -186,6 +204,18 @@ namespace LeisureStar
 
 			List<Score> scores = new List<Score>
 			{
+				new Score {
+					Value = 1
+				},
+				new Score {
+					Value = 1
+				},
+				new Score {
+					Value = 1
+				},
+				new Score {
+					Value = 1
+				},
 				new Score {
 					Value = 1
 				},
@@ -288,9 +318,29 @@ namespace LeisureStar
 			teams[3].Scores.Add(scores[11]);
 			players[7].Scores.Add(scores[11]);
 
-			//game 5 (uncompleted game)
+			//game 5 - the rematch
 			games[4].Teams.Add(teams[0]);
 			games[4].Teams.Add(teams[1]);
+
+			games[4].Scores.Add(scores[12]);
+			teams[0].Scores.Add(scores[12]);
+			players[0].Scores.Add(scores[12]);
+
+			games[4].Scores.Add(scores[13]);
+			teams[0].Scores.Add(scores[13]);
+			players[1].Scores.Add(scores[13]);
+
+			games[4].Scores.Add(scores[14]);
+			teams[0].Scores.Add(scores[14]);
+			players[1].Scores.Add(scores[14]);
+
+			games[4].Scores.Add(scores[15]);
+			teams[1].Scores.Add(scores[15]);
+			players[2].Scores.Add(scores[15]);
+
+			//game 6 (uncompleted game)
+			games[5].Teams.Add(teams[0]);
+			games[5].Teams.Add(teams[1]);
 
 			games.ForEach(g => LeisureStarDataContext.Current.Games.Add(g));
 

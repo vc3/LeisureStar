@@ -9,6 +9,7 @@ using System.Data.Entity;
 
 namespace LeisureStar.Models
 {
+	[GraphReferenceFormat("[Name]")]
 	public class Team
 	{
 		#region Properties

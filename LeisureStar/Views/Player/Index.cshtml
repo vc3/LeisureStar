@@ -4,7 +4,7 @@
 
 @ExoWeb.Model(new
 {
-	players = Player.All
+	players = Player.All.Include("this.Gender")
 })
 
 @ExoWeb.Render(
@@ -21,7 +21,7 @@
 					<th>&nbsp;</th>
 				</tr>
 			</thead>
-			<tbody class="sys-template" sys:attach="dataview" dataview:data="{~ model.players,source=window.context}">
+			<tbody class="sys-template" sys:attach="dataview" dataview:data="{~ context.model.players, source=window }">
 				<tr sys:class="{{ $index % 2 == 0 ? 'even' : '' }}">
 					<td>{# FirstName}</td>
 					<td>{# LastName}</td>

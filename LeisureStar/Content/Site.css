@@ -396,7 +396,6 @@ div.form div.field
 }
 .col1 {
     float:left;
-    width:20%;
 }
 
 .teamname 
@@ -443,3 +442,5 @@ div.form div.field
 {
 	clear: both;
 }
+
+.sys-template {display:none;}

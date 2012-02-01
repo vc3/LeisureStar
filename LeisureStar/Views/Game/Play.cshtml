@@ -9,18 +9,18 @@
 
 @ExoWeb.Render(
 	@<section>
-		<div class="sys-template container1" sys:attach="dataview" dataview:data="{~ model.game, source=window.context}">
+		<div class="sys-template container1" sys:attach="dataview" dataview:data="{~ context.model.game, source=window }">
 			<div class="sys-template" sys:attach="dataview" dataview:data="{~ Teams }">
 				<div class="col1">
 					<div class="teamname">{# Name }</div>
 					<div class="sys-template" sys:attach="dataview" dataview:data="{~ Players }">
 						<div class="playgameplayername">{# FullName }</div>
 						<div class="playgameaddscoreicon"><div class="ui-state-default ui-corner-all "><span class="ui-icon ui-icon-circle-plus" onclick="addScore($parentContextData(this));"></span></div></div>
-						<div class="playgamescore playgameplayerscore">{# CurrentGameScoreTotal }</div>
+						<div class="playgamescore playgameplayerscore">{# uiCurrentGameScoreTotal }</div>
 						<div class="spacer"></div>
 					</div>
 
-					<div class="playgamescore playgameteamscore">{# CurrentGameScoreTotal }</div>
+					<div class="playgamescore playgameteamscore">{# uiCurrentGameScoreTotal }</div>
 					<div sys:attach="toggle" toggle:on="{binding IsWinner }" toggle:when="{{ false }}" toggle:action="hide">
 						<div class="playgamescore playgameteamscore">Winning!</div>
 					</div>
@@ -79,7 +79,7 @@
 
 			$extend('Player', function (type) {
 				type.meta.addProperty({
-					name: 'CurrentGameScoreTotal',
+					name: 'uiCurrentGameScoreTotal',
 					type: Number,
 					isList: false
 				})
@@ -98,7 +98,7 @@
 
 			$extend('Team', function (type) {
 				type.meta.addProperty({
-					name: 'CurrentGameScoreTotal',
+					name: 'uiCurrentGameScoreTotal',
 					type: Number,
 					isList: false
 				})
@@ -126,8 +126,8 @@
 							var winner = null;
 
 							this.get_Teams().forEach(function (item, index) {
-								if (item.get_CurrentGameScoreTotal() > maxScore) {
-									maxScore = item.get_CurrentGameScoreTotal();
+								if (item.get_uiCurrentGameScoreTotal() > maxScore) {
+									maxScore = item.get_uiCurrentGameScoreTotal();
 									winner = item;
 								}
 							});

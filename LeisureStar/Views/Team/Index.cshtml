@@ -9,23 +9,20 @@
 
 @ExoWeb.Render(
 	@<section>
-		<table class="grid readonly">
-			<thead>
-				<tr>
-					<th>Team</th>
-					<th>Wins</th>
-					<th>&nbsp;</th>
-				</tr>
-			</thead>
-			<tbody class="sys-template" sys:attach="dataview" dataview:data="{~ model.teams,source=window.context}">
-				<tr sys:class="{{ $index % 2 == 0 ? 'even' : '' }}">
-					<td>{# Name}</td>
-					<td>{# Wins}</td>
-					<td><a sys:href="{{ '@Url.Action("Edit", "Team")/' + $dataItem.meta.id }}">Edit</a></td>
-					<td><a href="#" class="button" sys:onclick="{{ 'deleteEntity(' + $dataItem.meta.id + ')' }}">Delete</a></td>
-				</tr>
-			</tbody>
-		</table>
+		<div class="sys-template readonly" sys:attach="dataview" dataview:data="{~ context.model.teams, source=window, transform=groupBy('Wins').groupBy('items.length').orderBy('group') }">
+			<div class="sys-template" sys:attach="dataview" dataview:data="{~ items }">
+				<h5>Teams with <span>{binding group}</span> wins:</h5>
+				<div class="sys-template" sys:attach="dataview" dataview:data="{~ items, transform=orderBy('Name') }">
+					<div>
+						<span>{# Name}</span> - 
+						<a sys:href="{{ '@Url.Action("Edit", "Team")/' + $dataItem.meta.id }}">Edit</a> | 
+						<a href="#" class="button" sys:onclick="{{ 'deleteEntity(' + $dataItem.meta.id + ')' }}">Delete</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<p />
 		<a href="@Url.Action("Edit", "Team")" class="button">Add</a>
 		<div class="message">
 			<span style="font-weight: bold;"></span>

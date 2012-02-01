@@ -18,8 +18,6 @@ namespace LeisureStar.Models
 
 		protected override void Seed(LeisureStarDataContext context)
 		{
-			//create list of teams
-			
 			base.Seed(context);
 		}
 	}

@@ -8,6 +8,7 @@ using ExoRule.DataAnnotations;
 
 namespace LeisureStar.Models
 {
+	[GraphReferenceFormat("[Name]")]
 	public class Game
 	{
 		#region Properties
@@ -22,10 +23,10 @@ namespace LeisureStar.Models
 		[Required]
 		public string Name { get; set; }
 
-		[DisplayFormat(DataFormatString = "Time")]
+		[DisplayFormat(DataFormatString = "t")]
 		public DateTime? Started { get; set; }
 
-		[DisplayFormat(DataFormatString = "Time")]
+		[DisplayFormat(DataFormatString = "t")]
 		public DateTime? Finished { get; set; }
 
 		[Required]

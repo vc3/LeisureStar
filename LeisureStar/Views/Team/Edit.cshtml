@@ -10,10 +10,10 @@
 
 @ExoWeb.Render(
 	@<section>
-		<div class="sys-template" sys:attach="dataview" dataview:data="{~ model.team, source=window.context}">
+		<div class="sys-template" sys:attach="dataview" dataview:data="{~ context.model.team, source=window }">
 			<div sys:attach="content" content:template="form" content:data="{@@ Name }"></div>
 			<p />
-			<div sys:attach="toggle" toggle:on="{~ Players }" toggle:when="{{ function(item){ return item.length > 0; } }}" toggle:action="show">
+			<div sys:attach="toggle" toggle:on="{~ Players }" toggle:action="show">
 				<span style="font-weight: bold;">Current Players:</span>
 				<div class="sys-template" sys:attach="dataview" dataview:data="{~ Players, transform=orderBy('LastName') }">
 					<span class="arrow-s" style="font-size:1em;" onclick="removePlayer($parentContextData(this));"></span>
@@ -24,7 +24,7 @@
 		</div>
 		<p />
 		<span style="font-weight: bold;">Available Players:</span>
-		<div class="sys-template allTeams" sys:attach="dataview" dataview:data="{~ model.allplayers, source=window.context, transform=where(function(item){ return !context.model.team.get_Players().contains(item);  }) }">
+		<div class="sys-template allTeams" sys:attach="dataview" dataview:data="{~ context.model.allplayers, source=window, transform=where(function(item){ return context.model.team.get_Players().indexOf(item) &lt; 0;  }) }">
 			<span class="arrow-n" style="font-size:1em; margin-top:-0.4em;" onclick="addPlayer($parentContextData(this));"></span>
 			<div class="readonly" style="display: inline;">{# FullName }</div>
 			<br />

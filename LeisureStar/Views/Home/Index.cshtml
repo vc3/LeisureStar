@@ -1,3 +1,59 @@
-﻿<p>
-    If you want to learn more about ExoSuite go to <a href="http://www.exosuite.org">www.exosuite.org</a>.
-</p>
+﻿@model IEnumerable<Game>
+		   
+@ExoWeb.LoadTemplates("~/Scripts/ExoWeb/exoweb-templates.htm")
+
+@ExoWeb.Model(new 
+{
+	games = Model
+})
+
+@ExoWeb.Render(@<section>
+	<table class="grid readonly">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Start Time</th>
+				<th>End Time</th>
+				<th>Number of Teams Playing</th>
+				<th>Number of Players per Team</th>
+				<th>Winner</th>
+				<th>&nbsp;</th>
+				<th>&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody class="sys-template" sys:attach="dataview" dataview:data="{~ context.model.games, source=window }">
+			<tr sys:class="{{ $index % 2 == 0 ? 'even' : '' }}">
+				<td>{# Name}</td>
+				<td>{# Started}</td>
+				<td>{# Finished}</td>
+				<td>{# NumberOfTeamsPlaying}</td>
+				<td>{# NumberOfPlayersPerTeam}</td>
+				<td>{# Winner}</td>
+				<td>
+					<a sys:if="{{ $dataItem.get_Finished() === undefined }}" sys:href="{{ '@Url.Action("Edit", "Game")/' + $dataItem.meta.id }}">Edit</a>
+					<div sys:if="{{ $dataItem.get_Finished() !== undefined }}">
+						Locked
+					</div>
+				</td>
+				<td>
+					<a sys:if="{{ $dataItem.get_Finished() === undefined }}" sys:href="{{ '@Url.Action("Play", "Game")/' + $dataItem.meta.id }}">Play</a>
+					<a sys:if="{{ $dataItem.get_Finished() !== undefined }}" sys:href="{{ '@Url.Action("ViewResults", "Game")/' + $dataItem.meta.id }}">View Results</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<div class="message">
+	<span style="font-weight: bold;"></span>
+	</div>
+</section>)
+
+
+<script type="text/javascript">
+	function showMessage(message) {
+		var messageBox = $('.message');
+		messageBox.children('span').text(message);
+		messageBox.fadeIn();
+	}
+
+</script>

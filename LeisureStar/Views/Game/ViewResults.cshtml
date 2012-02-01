@@ -1,5 +1,5 @@
 ﻿@model Game
-		   
+
 @ExoWeb.LoadTemplates("~/Scripts/ExoWeb/exoweb-templates.htm")
 
 @ExoWeb.Model(new 
@@ -7,26 +7,66 @@
 	game = Model.Include("this{Scores,Teams{Players{Scores,Teams},Scores,Games},Winner}")
 })
 
+<script type="text/javascript">
+	$extend('Player', function (type) {
+		type.meta.addProperty({
+			name: 'uiCurrentGameScoreTotal',
+			type: Number,
+			isList: false
+		})
+		.calculated({
+			fn: function () {
+				var activeGameScores = $transform(this.get_Scores()).where('Game.meta.id === context.model.game.meta.id');
+				var totalScore = 0;
+				activeGameScores.forEach(function (item, index) {
+					totalScore += item.get_Value();
+				});
+				return totalScore;
+			},
+			basedOn: ['this.Scores']
+		});
+	});
+
+	$extend('Team', function (type) {
+		type.meta.addProperty({
+			name: 'uiCurrentGameScoreTotal',
+			type: Number,
+			isList: false
+		})
+		.calculated({
+			fn: function () {
+				var activeGameScores = $transform(this.get_Scores()).where('Game.meta.id === context.model.game.meta.id');
+				var totalScore = 0;
+				activeGameScores.forEach(function (item, index) {
+					totalScore += item.get_Value();
+				});
+				return totalScore;
+			},
+			basedOn: ['this.Scores']
+		});
+	});
+</script>
+
 @ExoWeb.Render(
 	@<section>
-		<div class="sys-template container1" sys:attach="dataview" dataview:data="{~ model.game, source=window.context}">
+		<div class="sys-template container1" sys:attach="dataview" dataview:data="{~ context.model.game, source=window }">
 			<div sys:attach="content" content:template="readonly form" content:data="{@@ Name }"></div>
-			<div sys:attach="content" content:template="readonly form" content:data="{@@ Started, label=Start Date }"></div>
-			<div sys:attach="content" content:template="readonly form" content:data="{@@ Finished, label=Finished Date }"></div>
+			<div sys:attach="content" content:template="readonly form" content:data="{@@ Started, label=Start Time, format=t }"></div>
+			<div sys:attach="content" content:template="readonly form" content:data="{@@ Finished, label=Finished Time, format=t }"></div>
 			<div sys:attach="content" content:template="readonly form" content:data="{@@ NumberOfTeamsPlaying, label=Teams Involved }"></div>
 			<div sys:attach="content" content:template="readonly form" content:data="{@@ NumberOfPlayersPerTeam, label=Players per Team }"></div>
 			<p />
 
 			<div class="sys-template" sys:attach="dataview" dataview:data="{~ Teams }">
-				<div class="col1">
+				<div class="col1" style="width: 400px">
 					<div class="teamname">{# Name }</div>
 					<div class="sys-template" sys:attach="dataview" dataview:data="{~ Players }">
-						<div class="playgameplayername">{# FullName }</div>
-						<div class="playgamescore playgameplayerscore">{# CurrentGameScoreTotal }</div>
+						<div class="playgameplayername">{~ format=[FirstName] [LastName] ([Wins] wins) }</div>
+						<div class="playgamescore playgameplayerscore">{# uiCurrentGameScoreTotal }</div>
 						<div class="spacer"></div>
 					</div>
 
-					<div class="playgamescore playgameteamscore">{# CurrentGameScoreTotal }</div>
+					<div class="playgamescore playgameteamscore">{# uiCurrentGameScoreTotal }</div>
 				</div>
 			</div>
 
@@ -34,47 +74,3 @@
 		</div>
 	</section>
 )
-
-<script type="text/javascript">
-	$exoweb({
-		contextReady: function () {
-			$extend('Player', function (type) {
-				type.meta.addProperty({
-					name: 'CurrentGameScoreTotal',
-					type: Number,
-					isList: false
-				})
-				.calculated({
-					fn: function () {
-						var activeGameScores = $transform(this.get_Scores()).where('Game.meta.id === context.model.game.meta.id');
-						var totalScore = 0;
-						activeGameScores.forEach(function (item, index) {
-							totalScore += item.get_Value();
-						});
-						return totalScore;
-					},
-					basedOn: ['this.Scores']
-				});
-			});
-
-			$extend('Team', function (type) {
-				type.meta.addProperty({
-					name: 'CurrentGameScoreTotal',
-					type: Number,
-					isList: false
-				})
-				.calculated({
-					fn: function () {
-						var activeGameScores = $transform(this.get_Scores()).where('Game.meta.id === context.model.game.meta.id');
-						var totalScore = 0;
-						activeGameScores.forEach(function (item, index) {
-							totalScore += item.get_Value();
-						});
-						return totalScore;
-					},
-					basedOn: ['this.Scores']
-				});
-			});
-		}
-	});
-</script>

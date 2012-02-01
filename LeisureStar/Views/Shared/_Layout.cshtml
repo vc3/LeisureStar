@@ -5,11 +5,11 @@
 	<title>@ViewBag.Title</title>
 	<link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
 	<link href="@Url.Content("~/Content/themes/base/jquery.ui.all.css")" rel="stylesheet" type="text/css" />
-	<script src="@Url.Content("~/Scripts/jquery-1.5.1.js")" type="text/javascript"></script>
+	<script src="@Url.Content("~/Scripts/jquery-1.4.2.js")" type="text/javascript"></script>
 	<script src="@Url.Content("~/Scripts/jquery-ui-1.8.11.min.js")" type="text/javascript"></script>
 	<script src="@Url.Content("~/Scripts/modernizr-1.7.min.js")" type="text/javascript"></script>
-	<script src="@Url.Content("~/Scripts/MicrosoftAjax.js")" type="text/javascript"></script>
-	<script src="@Url.Content("~/Scripts/MicrosoftAjaxTemplates.debug.js")" type="text/javascript"></script>
+	<script src="@Url.Content("~/Scripts/Ajax/MicrosoftAjax.debug.js?cachehash=" + ExoWeb.CacheHash)" type="text/javascript"></script>
+	<script src="@Url.Content("~/Scripts/Ajax/MicrosoftAjaxTemplates.debug.js?cachehash=" + ExoWeb.CacheHash)" type="text/javascript"></script>
 	<script src="@Url.Content("~/Scripts/ExoWeb/exoweb-msajax.js?cachehash=" + ExoWeb.CacheHash)" type="text/javascript"></script>
 
 	<script>
@@ -44,6 +44,8 @@
 	
 	<!-- Add default validation display -->
 	<script type="text/javascript">
+
+		ExoWeb.config.debug = true;
 
 		function setState(el, prefix, current, all) {
 			all.forEach(function (state) {
@@ -101,15 +103,18 @@
 				<h1>LeisureStar</h1>
 			</div>
 			<div id="logindisplay">
-			</div>
+                @Html.Partial("_LogOnPartial")
+            </div>
 			<nav>
-				<ul id="menu">
-					<li>@Html.ActionLink("Home", "Index", "Home")</li>
-					<li>@Html.ActionLink("Players", "Index", "Player")</li>
-					<li>@Html.ActionLink("Teams", "Index", "Team")</li>
-					<li>@Html.ActionLink("Games", "Index", "Game")</li>
-					<li>@Html.ActionLink("Client Side Examples", "Index", "ClientSideExamples")</li>
-				</ul>
+				@if (Request.IsAuthenticated)
+				{
+					<ul id="menu">
+						<li>@Html.ActionLink("Home", "Index", "Home")</li>
+						<li>@Html.ActionLink("Players", "Index", "Player")</li>
+						<li>@Html.ActionLink("Teams", "Index", "Team")</li>
+						<li>@Html.ActionLink("Games", "Index", "Game")</li>
+					</ul>
+				}
 			</nav>
 		</header>
 		<section id="main">

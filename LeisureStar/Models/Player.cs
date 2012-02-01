@@ -8,6 +8,7 @@ using ExoRule.DataAnnotations;
 
 namespace LeisureStar.Models
 {
+	[GraphReferenceFormat("[FirstName] [LastName]")]
 	public class Player
 	{
 		#region Properties
