@@ -237,7 +237,7 @@
           <AutoAssignPort>False</AutoAssignPort>
           <DevelopmentServerPort>61118</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/LeisureStar.ServerRendering</IISUrl>
+          <IISUrl>http://localhost/LeisureStar</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
