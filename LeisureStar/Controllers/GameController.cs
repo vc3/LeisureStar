@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using LeisureStar.Models;
-using ExoGraph;
+using ExoModel;
 
 namespace LeisureStar.Controllers
 {
@@ -24,21 +24,21 @@ namespace LeisureStar.Controllers
 		public ActionResult Edit(string id)
 		{
 			ViewBag.Title = "Edit Game";
-			return View(GraphContext.Create<Game>(id));
+			return View(ModelContext.Create<Game>(id));
 		}
 
 		[AllowAnonymous]
 		public ActionResult ViewResults(string id)
 		{
 			ViewBag.Title = "Game Results";
-			return View(GraphContext.Create<Game>(id));
+			return View(ModelContext.Create<Game>(id));
 		}
 
 		[AllowAnonymous]
 		public ActionResult Play(string id)
 		{
 			ViewBag.Title = "Play Game";
-			return View(GraphContext.Create<Game>(id));
+			return View(ModelContext.Create<Game>(id));
 		}
 
 	}

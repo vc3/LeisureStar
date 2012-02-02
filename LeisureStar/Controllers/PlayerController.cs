@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using LeisureStar.Models;
-using ExoGraph;
+using ExoModel;
 
 namespace LeisureStar.Controllers
 {
@@ -28,7 +28,7 @@ namespace LeisureStar.Controllers
 		public ActionResult Edit(string id)
 		{
 			ViewBag.Title = "Edit Player";
-			return View(GraphContext.Create<Player>(id));
+			return View(ModelContext.Create<Player>(id));
 		}
 	}
 }

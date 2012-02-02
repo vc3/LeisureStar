@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.ComponentModel.DataAnnotations;
-using ExoGraph;
+using ExoModel;
 using ExoRule;
 using ExoRule.DataAnnotations;
 using System.Data.Entity;
 
 namespace LeisureStar.Models
 {
-	[GraphReferenceFormat("[Name]")]
+	[ModelReferenceFormat("[Name]")]
 	public class Team
 	{
 		#region Properties

@@ -162,17 +162,13 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Amnesia\Amnesia.csproj">
-      <Project>{1A246932-199E-4DEE-8C7B-D5FBC3FF52C9}</Project>
-      <Name>Amnesia</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\ExoGraph\ExoGraph.EntityFramework\ExoGraph.EntityFramework.csproj">
+    <ProjectReference Include="..\..\ExoGraph\ExoGraph.EntityFramework\ExoModel.EntityFramework.csproj">
       <Project>{48D45BC6-1815-4F09-BD2F-FC5011B7DBC2}</Project>
-      <Name>ExoGraph.EntityFramework</Name>
+      <Name>ExoModel.EntityFramework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\ExoGraph\ExoGraph\ExoGraph.csproj">
+    <ProjectReference Include="..\..\ExoGraph\ExoGraph\ExoModel.csproj">
       <Project>{F1D92AF4-9E97-4D29-8A24-B3C3011F2A42}</Project>
-      <Name>ExoGraph</Name>
+      <Name>ExoModel</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\ExoRule\ExoRule.DataAnnotations\ExoRule.DataAnnotations.csproj">
       <Project>{790AF32B-245D-4CEE-B231-E7331C392324}</Project>
@@ -181,10 +177,6 @@
     <ProjectReference Include="..\..\ExoRule\ExoRule\ExoRule.csproj">
       <Project>{B67D2642-A41A-42B2-8454-78ABA257008F}</Project>
       <Name>ExoRule</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\ExoWeb\ExoWeb.DataAnnotations\ExoWeb.DataAnnotations.csproj">
-      <Project>{662948BC-59DA-4771-949F-C5327BF35518}</Project>
-      <Name>ExoWeb.DataAnnotations</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\ExoWeb\ExoWeb\ExoWeb.csproj">
       <Project>{4B14422C-751C-42AE-832A-B474A4AD0D95}</Project>
@@ -248,7 +240,7 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PostBuildEvent>"$(SolutionDir)packages\Afterthought.1.1.1\tools\Afterthought.Amender.exe" "$(TargetPath)" "$(TargetDir)ExoGraph.EntityFramework.dll"
+    <PostBuildEvent>"$(SolutionDir)packages\Afterthought.1.1.1\tools\Afterthought.Amender.exe" "$(TargetPath)" "$(TargetDir)ExoModel.EntityFramework.dll"
 </PostBuildEvent>
   </PropertyGroup>
 </Project>

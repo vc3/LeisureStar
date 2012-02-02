@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using ExoGraph;
+using ExoModel;
 using LeisureStar.Models;
 
 namespace LeisureStar.Controllers
@@ -15,7 +15,7 @@ namespace LeisureStar.Controllers
         public ActionResult LogOn()
         {
 			ViewBag.Title = "Login";
-			return View(GraphContext.Create<Account>());
+			return View(ModelContext.Create<Account>());
         }
 
 		[HttpPost]

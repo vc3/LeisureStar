@@ -4,9 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using ExoGraph;
+using ExoModel;
 using System.Reflection;
-using ExoGraph.EntityFramework;
+using ExoModel.EntityFramework;
 using LeisureStar.Models;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
@@ -44,10 +44,10 @@ namespace LeisureStar
 			ExoWeb.ExoWeb.EnableServerRendering = false;
 
 			//System.Diagnostics.Debugger.Launch();
-			new GraphContextProvider().CreateContext += (source, args) =>
+			new ModelContextProvider().CreateContext += (source, args) =>
 			{
 				Assembly coreAssembly = typeof(LeisureStar.Models.Player).Assembly;
-				args.Context = new GraphContext(new EntityFrameworkGraphTypeProvider(() => new LeisureStarDataContext()));
+				args.Context = new ModelContext(new EntityFrameworkModelTypeProvider(() => new LeisureStarDataContext()));
 				ExoRule.Rule.RegisterRules(coreAssembly);
 			};
 
@@ -58,7 +58,7 @@ namespace LeisureStar
 
 			//Rebuild Database from the POCO's and seed the database with test data
 			//cannot use the normal method of seeding data by overriding the Seed method
-			//of DropCreateDatabaseAlways because the DbContext and GraphContext are
+			//of DropCreateDatabaseAlways because the DbContext and ModelContext are
 			//so closely coupled.
 			Database.SetInitializer<LeisureStarDataContext>(new DropCreateDatabaseAlways<LeisureStarDataContext>());
 			SeedDatabase();

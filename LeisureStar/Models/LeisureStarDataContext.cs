@@ -4,8 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using ExoGraph.EntityFramework;
-using ExoGraph;
+using ExoModel.EntityFramework;
+using ExoModel;
 using ExoRule;
 using ExoRule.DataAnnotations;
 
@@ -25,7 +25,7 @@ namespace LeisureStar.Models
 		{
 			get
 			{
-				return (LeisureStarDataContext)((EntityFrameworkGraphTypeProvider.EntityGraphType)GraphContext.Current.GetGraphType<Team>()).GetObjectContext();
+				return (LeisureStarDataContext)((EntityFrameworkModelTypeProvider.EntityModelType)ModelContext.Current.GetModelType<Team>()).GetObjectContext();
 			}
 		}
 	}

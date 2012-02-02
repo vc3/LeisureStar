@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.ComponentModel.DataAnnotations;
-using ExoGraph;
+using ExoModel;
 using ExoRule;
 using ExoRule.DataAnnotations;
 
 namespace LeisureStar.Models
 {
-	[GraphReferenceFormat("[FirstName] [LastName]")]
+	[ModelReferenceFormat("[FirstName] [LastName]")]
 	public class Player
 	{
 		#region Properties
