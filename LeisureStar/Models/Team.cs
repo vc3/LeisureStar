@@ -9,7 +9,7 @@ using System.Data.Entity;
 
 namespace LeisureStar.Models
 {
-	[ModelReferenceFormat("[Name]")]
+	[ModelFormat("[Name]")]
 	public class Team
 	{
 		#region Properties

@@ -8,7 +8,7 @@ using ExoRule.DataAnnotations;
 
 namespace LeisureStar.Models
 {
-	[ModelReferenceFormat("[Name]")]
+	[ModelFormat("[Name]")]
 	public class Game
 	{
 		#region Properties
