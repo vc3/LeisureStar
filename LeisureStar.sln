@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExoModel.EntityFramework", "..\ExoGraph\ExoGraph.EntityFramework\ExoModel.EntityFramework.csproj", "{48D45BC6-1815-4F09-BD2F-FC5011B7DBC2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExoModel.EntityFramework", "..\ExoModel\ExoModel.EntityFramework\ExoModel.EntityFramework.csproj", "{48D45BC6-1815-4F09-BD2F-FC5011B7DBC2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExoRule", "..\ExoRule\ExoRule\ExoRule.csproj", "{B67D2642-A41A-42B2-8454-78ABA257008F}"
 EndProject
@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExoWeb", "..\ExoWeb\ExoWeb\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeisureStar", "LeisureStar\LeisureStar.csproj", "{FAF5AB55-1BF6-4DC6-B4BA-541E0BA952A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExoModel", "..\ExoGraph\ExoGraph\ExoModel.csproj", "{F1D92AF4-9E97-4D29-8A24-B3C3011F2A42}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExoModel", "..\ExoModel\ExoModel\ExoModel.csproj", "{F1D92AF4-9E97-4D29-8A24-B3C3011F2A42}"
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
@@ -31,12 +31,12 @@ Global
 		SccProjectUniqueName4 = LeisureStar\\LeisureStar.csproj
 		SccProjectName4 = LeisureStar
 		SccLocalPath4 = LeisureStar
-		SccProjectUniqueName5 = ..\\ExoGraph\\ExoGraph\\ExoModel.csproj
-		SccProjectName5 = ../ExoGraph/ExoGraph
-		SccLocalPath5 = ..\\ExoGraph\\ExoGraph
-		SccProjectUniqueName6 = ..\\ExoGraph\\ExoGraph.EntityFramework\\ExoModel.EntityFramework.csproj
-		SccProjectName6 = ../ExoGraph/ExoGraph.EntityFramework
-		SccLocalPath6 = ..\\ExoGraph\\ExoGraph.EntityFramework
+		SccProjectUniqueName5 = ..\\ExoModel\\ExoModel\\ExoModel.csproj
+		SccProjectName5 = ../ExoModel/ExoModel
+		SccLocalPath5 = ..\\ExoModel\\ExoModel
+		SccProjectUniqueName6 = ..\\ExoModel\\ExoModel.EntityFramework\\ExoModel.EntityFramework.csproj
+		SccProjectName6 = ../ExoModel/ExoModel.EntityFramework
+		SccLocalPath6 = ..\\ExoModel\\ExoModel.EntityFramework
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
