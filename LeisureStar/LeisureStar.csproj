@@ -162,11 +162,11 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\ExoGraph\ExoGraph.EntityFramework\ExoModel.EntityFramework.csproj">
+    <ProjectReference Include="..\..\ExoModel\ExoModel.EntityFramework\ExoModel.EntityFramework.csproj">
       <Project>{48D45BC6-1815-4F09-BD2F-FC5011B7DBC2}</Project>
       <Name>ExoModel.EntityFramework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\ExoGraph\ExoGraph\ExoModel.csproj">
+    <ProjectReference Include="..\..\ExoModel\ExoModel\ExoModel.csproj">
       <Project>{F1D92AF4-9E97-4D29-8A24-B3C3011F2A42}</Project>
       <Name>ExoModel</Name>
     </ProjectReference>
