@@ -41,7 +41,7 @@ namespace LeisureStar
 		protected void Application_Start()
 		{
 			// Disable server rendering
-			ExoWeb.ExoWeb.EnableServerRendering = false;
+			ExoWeb.ExoWeb.EnableServerRendering = true;
 
 			//System.Diagnostics.Debugger.Launch();
 			new ModelContextProvider().CreateContext += (source, args) =>

@@ -12,7 +12,7 @@
 	@<section>
 		<div class="sys-template" sys:attach="dataview" dataview:data="{~ context.model.team, source=window }">
 			<div sys:attach="content" content:template="form" content:data="{@@ Name }"></div>
-			<p />
+			<p></p>
 			<div sys:attach="toggle" toggle:on="{~ Players }" toggle:action="show">
 				<span style="font-weight: bold;">Current Players:</span>
 				<div class="sys-template" sys:attach="dataview" dataview:data="{~ Players, transform=orderBy('LastName') }">
@@ -22,14 +22,14 @@
 				</div>
 			</div>
 		</div>
-		<p />
+		<p></p>
 		<span style="font-weight: bold;">Available Players:</span>
 		<div class="sys-template allTeams" sys:attach="dataview" dataview:data="{~ context.model.allplayers, source=window, transform=where(function(item){ return context.model.team.get_Players().indexOf(item) &lt; 0;  }) }">
 			<span class="arrow-n" style="font-size:1em; margin-top:-0.4em;" onclick="addPlayer($parentContextData(this));"></span>
 			<div class="readonly" style="display: inline;">{# FullName }</div>
 			<br />
 		</div>
-		<p />
+		<p></p>
 		<div class="message">
 		<span style="font-weight: bold;"></span>
 		</div>

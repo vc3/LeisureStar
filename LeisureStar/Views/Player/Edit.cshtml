@@ -14,7 +14,7 @@
 			<div sys:attach="content" content:template="form" content:data="{@@ FirstName }"></div>
 			<div sys:attach="content" content:template="form" content:data="{@@ LastName }"></div>
 			<div sys:attach="content" content:template="form" content:data="{@@ Gender }"></div>
-			<p />
+			<p></p>
 			<div sys:attach="toggle" toggle:on="{~ Teams }" toggle:when="{{ function(item){ return item.length > 0; } }}" toggle:action="show">
 				<span style="font-weight: bold;">Current Teams:</span>
 				<div class="sys-template" sys:attach="dataview" dataview:data="{~ Teams }">
@@ -25,18 +25,18 @@
 			</div>
 		</div>
 
-		<p />
+		<p></p>
 		<span style="font-weight: bold;">Available Teams:</span>
 		<div class="sys-template allTeams" sys:attach="dataview" dataview:data="{~ context.model.allteams, source=window, transform=where(function(item){ return context.model.player.get_Teams().indexOf(item) &lt; 0; }) }">
 			<span class="arrow-n" style="font-size:1em; margin-top:-0.4em;" onclick="addTeam($parentContextData(this));"></span>
 			<div class="readonly" style="display: inline;">{# Name }</div>
 			<br />
 		</div>
-		<p />
+		<p></p>
 		<div class="message">
 		<span style="font-weight: bold;"></span>
 		</div>
-		<p />
+		<p></p>
 		<a href="#" class="button" onclick="save()">Save</a>
 	</section>
 )
